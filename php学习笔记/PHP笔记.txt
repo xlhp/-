@@ -1,0 +1,237 @@
+php碰到的问题
+header()跳转写同一目录下应该是location:./文件名;
+
+
+
+
+
+
+
+
+
+
+
+
+rand(min,max); 在min和max中随机生成一个整数
+date(format) 来生成当前日期
+foreach遍历数组   不设置key 则默认key为 0 ,1 ,2 ....
+				设置  则为设置的key
+
+字符串处理:	1,自动为特殊字符添加addslashes(string);
+			2,自动删除stripslashes(String);
+			3,strlen();计算字符串长度 包括空格
+			/**
+			* @param string 处理的字符串
+			* @param return 0:默认返回找到单词的数量 1:将单词放入数组中,并返回数组 2:  说不明白 忘记自己查 反正也返回一个数组稍微有点区别
+			* @param char 将传入的特殊字符视为一个单词
+			*/
+			4,查询字符串中英文单词个数:str_word_count(string ,return , char );
+			5,清理字符串空格:ltrim(String,charlist):左面字符串头部空格
+							 rtrim(String,charlist):清理右侧尾部空格
+							 trim(String,charlist):清除两侧所有空格
+							 charlist:规定从字符串中删除那些字符,如省略,则从字符串中默认删除
+						     str_replace("被替换","用来替换","字符串对象");
+							 mb_strlen("字符串","编码格式");按照编码格式来数个数
+							 mb_strwidth("字符串") ; 使用标准编码(汉字2字节);
+							 
+			6,字符串的切割与整合:
+					1),explode(" ",String);
+					2),implode("",array);将数组拼接成一个字符串
+			
+			
+			7,字符串的截取 substr(string,begin,length);
+			8,字符串替换:subtr_replace(string , "替换字符串",begin,length);
+			9,strstr("目标字符","需要查看的字符串")   stristr() 同上,返回查找到的字符串到尾部  没找到 返回false	
+
+正则表达式:			
+			'+' 至少出现一次
+			语法 : 字符串必须有边界
+			
+					
+数组排序:sort() 默认排序
+		 asort() 按照数组元素的值升序排序
+		 ksort() 根据数组元素的键值
+		 
+		 rsort() 按照默认排序降序排列
+		 arsort() 按照数组元素降序排列
+		 krsort() 按照键值进行降序排列
+		 
+		 foreach遍历数组 需要用reset函数重新将指针返回第一位置
+		 
+数组处理:  array_unshift(array,argu1,argu2); 将参数添加到数组前面
+		   array_push(array , argu1 , argu2); 将参数添加到数组尾部
+		   array_shift(array);  删除数组头上第一个元素,并返回
+		   array_pop(array);    删除数组尾部的第一个元素,并返回
+		   
+查看数组内容: in_array(arg,array)  判断该元素值是否在数组中,并返回一个boolean值
+			  array_key_exists(arg,array)  判断该键值是否在数组中,并返回一个boolean值
+		      array_search(arg,array); 判断元素值是否在数组,并返回一个boolean值
+			  array_keys(array) 将数组中的key值 全部转换成value 并返回
+			  aray_value(array) 将数组中的key值全部替换成0~n  并作为一个新数组返回  
+			  array_count_values(array) 统计数组中每一个value出现的次数,并将其作为一个数组返回  只可作为一维数组
+			  array_unique(array) 返回一个具有唯一性元素值的数组
+			  array_flip(array); 调换数组中键值和元素值  并将其作为一个数组返回 
+			  serialize(array)  数组序列化
+			  unserialize(array) 反序列化
+			  array_merge()  合并两个数组
+			  unset(array)  释放数组使用的空间
+			
+			
+		
+			
+			
+			
+			
+	
+
+
+
+
+
+----------------------------------------------
+	php header()方法
+	1,跳转页面 header("location",$url);//
+	2,声明content-type
+	3,返回response状态码 header("HTTP/1.1 404 Not Found");
+	4,在某个时间后执行跳转 header("Refresh: 10; url=http://www.baidu.com
+	/");
+	5,控制浏览器缓存:header("Expires:mon,26 Jul 19997 05:00:00 GMT");
+	.....
+	6,执行http验证
+	7,设置内容类型,设置MIME用户作为附件
+	设置传输方式,设置内容长度
+			
+			
+			
+			
+php异常处理
+		1,(错误)执行前错误 能够被编译器检测未执行就可以判断
+		2,(异常)运行时错误
+常见错误:1,拼写错误, 
+		 2,标点符号
+		 3,单引号和双引号不匹配,括号不匹配
+		 4,等号与赋值符号区分
+		 5,变量的使用
+		 6,调用了不存在的变量或文件
+		 7,环境配置不匹配
+错误处理:php中默认的处理是想浏览器发送一条带有
+		 
+		 1,使用if(){}去判断和提示或者自动处理
+		 2,创建自定义错误处理函数 ,来处理
+		 set_error_handler(function_name) 将一个方法 设置为错误处理函数
+触发错误:触发错误的一个函数trigger_error
+		 
+		
+		 
+		 
+		 
+异常处理: 1,当前代码的状态会被保存
+		  2, 代码被切换到异常处理函数
+ 处理方法:通常情况下,后面的代码不会继续执行,php会尝试查找匹配的catch代码块,如果没有找到catch代码块,并且没有set_exception_handler()作为处理,则产生一个致命错误
+     或者使用try throw 来处理或抛出    catch用来捕获异常,并且同时创建一个包含异常信息的对象 
+		 
+		 
+
+		 
+		 
+		 
+时间:
+	时间戳:time() 获取一个从70年1月1号至今的秒数
+	时间处理方法: date(fromat,time());return string 
+					getdate(time());  return array()
+					mktime(小时,分钟,秒,月,日,年);
+				checkdate(int $month,int $day,int $year); 检查日期有效性
+				date_default_time_zone("PRC")
+				strftime(格式,时间戳);
+				gmstrftime()  将本地时间转成格林威治时间
+				setlocale(目录,本地化值) 
+		 
+开发问题 
+		 
+pdo(php database object) :  exec() 用来执行建表操作等其他操作  ! 无法执行查询操作
+		$pdo->errorCode()  打印错误信息
+		$pdo->errorInfo()  返回错误信息的组数
+	
+		query($sql) :执行查询操作  当然也可以执行增删改操作
+		prepare() 和execute()预处理sql语句
+		PDO::Statement->fetch() :获取查询结果集数组
+		bindParam() 可以用来绑定参数
+		debugDumpParams() 用来打印预处理语句
+		PDO::Statement->execute(array); 返回一个bool值
+		PDO->lastinsertid()  最后一次插入的主键
+		
+		编码格式 header("Content-type:text/html;charset=utf-8");
+		
+		
+		header跳转
+		
+		 
+		 
+php  class  权限修饰符：public private protected  类似于java 
+    php 成员属性 必须使用关键词进行修饰  如public protected private  如果不进行修饰 则使用var关键词进行修饰
+		成员方法 functioin 名字(){}
+		实例化：$    =  new className(argu[]);
+		调用：  '::'  可以在不声明实例的情况下访问类成员  其中关键词有：parent self 类名  
+					parent 可以调用 父类中的成员变量,常量,成员方法 self 关键词 可以调用当前类中的常量和静态变量,类名关键词可以调用本类中的常量,变量和方法  
+	构造方法: 在php5 之前  构造方法名必须和类名相互一致 从php5开始 构造方法名必须由两个下划线开头
+	析构方法:由于本身php有垃圾回收机制,所以析构方法的存在是没有太大意义的
+	访问器:即__get() 和 __set()
+	类的继承:使用extends 关键词进行声明  php是单继承
+	抽象类:abstract  区别:方法没有方法体而且至少包含一个抽象方法  抽象方法也必须使用abstract来修饰
+	接口:interface 来声明  接口只能定义常量  成员方法必须是抽象方法
+	final关键词:若父类中方法被声明为final 则该方法无法被继承 同理类也可以被声明成final 但是属性无法被生命成final
+	instanceof  判断是否属于某一类
+	__CLASS__  获取当前类的类名
+	get_class() 获取当前类的类名
+	get_called_class() 获取当前主调用类的类名
+		 
+	fopen() 不仅用来打开文件,还用来创建文件 
+	getcwd()获取当前工作目录
+	scandir("路径",int) 返回一个该目录下的所有文件数组,如果不是数组 就返回一个false
+	dir("路径") 模仿面向对象机制,将制定的目录名转换成一个对象返回
+		dir类的属性和方法:string path , resource handle, string read(void) , void rewind(void), void close(void)	
+	chdir(directory) 将php的当前目录改为directory 如果成功返回true 失败false
+	void closedir(resource dir_handle) 关闭由dir_handle制定的目录流  另外目录流必须由opendir()打开
+	 resource opendir(string path) 返回一个由path生成的resource目录句柄 不能打开 则返回一个false 并产生一个错误
+	 is_dir(string path) 判断是不是一个目录
+	 string readdir(resource dir_handle);  从目录句柄中读取条目
+	 closedir() 函数关闭目录句柄
+网页分页:主要获取当前页面是第几个页面
+需要获取的值:总记录数 , 需要分几个页面,当前页面, 判断页面是否合格
+
+
+
+
+
+
+
+
+
+
+
+
+thinkphp学习
+thinkphp.cn下载
+安装 检测安装环境是否符合
+
+
+
+目录结构: application  应用目录 整个网站的核心
+				index 前台目录
+				admin 后台目录
+		  extend 扩展类库目录
+		  public静态资源和入口文件
+				static 存放
+
+
+
+
+
+
+
+
+
+
+	
+			
+			

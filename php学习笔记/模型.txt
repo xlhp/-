@@ -1,0 +1,41 @@
+1,模型(model)
+	数据模型:省的代码写两遍
+2,新建数据模型
+	1,手动创建
+	2,命令行创建
+3,注意
+关于模型  因为数据模型需要继承Model类 所以会默认继承一部分东西过来 , 老师说的与数据库名字不一致 则会报错 是因为框架找不到应该存在的$table属性 则会默认将模型名当成表名来处理 因此会报错
+	:1,数据模型的名字,建议与数据库表名名字相同
+	:2,如果数据库名字和模型名字不一致,可以设置表名 protected $table = "";
+	3,如果表名带下划线 则使用驼峰命名法
+	
+4,模型的实例化使用
+	1,使用静态方法查询
+		静态调用该方法类
+	2,实例化模型
+	
+	3,Loader.php类进行加载
+	
+	4,helper.php model() 方法进行加载及实例
+	
+	
+	
+	例子
+		 $demo = new Demo();
+        dump($demo::get(1)->toArray());
+        //调用静态方法
+        $dat  = Demo::get(1)->toArray();
+        //实例化模型
+        $demo = new Demo();
+        $dat2 = $demo::get(1)->toArray();
+        //load类进行加载
+        $demo1 = Loader::model("Demo");
+        $dat3 = $demo1::get(1)->toArray();
+        dump($dat3);
+        //使用helper.php
+        $demo2 = model("Demo");
+        dump($demo2::get(1)->toArray());
+		
+		
+	5,save方法进行新增
+	

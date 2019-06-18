@@ -1,0 +1,134 @@
+1,验证器
+	1,首先需要继承一个 think\Validate ; 
+	2,实例化时需要给构造器提供验证规则和验证提示
+	3,使用时需调用 $validate->check(需要验证的信息);
+	$validate = new Validate(
+            [
+                "username"=>"require|length:6,12",
+                "password"=>"require|confirm:repassword",
+            ],
+            [
+                "username.require"=>"用户名不存在",
+                "username.length"=>"用户名不符合规范",
+                "password.request"=>"请输入密码后重试",
+                "password.confirm"=>"两次输入的密码不一致"
+            ]
+        );
+		
+	4,可以将验证器单独提出来一个包/app/index/validate
+		 该类需要继承think\Validate  
+		 并且最基本需要重写rule和message
+		 //验证规则
+		protected $rule = [
+				"username"=>"require|length:6,12",
+				"password"=>"require|confirm:repassword",
+		];
+		//错误提示信息
+		protected $message=[
+			"username.require"=>"用户名不存在",
+			"username.length"=>"用户名不符合规范",
+			"password.request"=>"请输入密码后重试",
+			"password.confirm"=>"两次输入的密码不一致"
+		];
+		
+		
+2,缓存
+	作用:
+			1,减少数据库压力
+			2,用户体验提高
+	支持:支持file,memecache......
+	1,缓存设置:config.php
+		'cache' => [
+				// 驱动方式
+				'type'   => 'File',
+				// 缓存保存目录
+				'path'   => CACHE_PATH,
+				// 缓存前缀
+				'prefix' => '',
+				// 缓存有效期 0表示永久缓存
+				'expire' => 0,
+			],
+	2,设置缓存
+		$cache = new Cache();
+        $data = Db::table("user")->select();
+        $result = $cache::set("userData",$data);//argu  : 缓存名字  缓存数据集   缓存时间  return bool
+		//或者是
+		cache("名字","缓存数据集","缓存时间");
+	3,获取
+		Cache::get("缓存名字");
+		cache("缓存名字")
+	4,删除缓存
+		Cache::rm("名字");
+		cache("名字",NULL);
+	5,清空缓存
+		Cache::clear(); 
+	6,如何使用:
+		
+3,session
+	1,设置session
+		 dump(Session::set("name","tpSession"));
+        \session("age","18");
+        $data=[
+            "name"=>"tp",
+            "work"=>"kaifa"
+        ];
+        Session::set("data",$data);
+	2,获取session
+	  //获取session
+		public function getSession(){
+			dump(Session::get("age"));
+			dump(\session("data"));
+		}
+	3,获取session是否存在
+		//判断是否存在
+		public function issetSession(){
+			dump(Session::has("name"));
+			dump(\session("?kek"));
+		}
+	4,删除session
+		//删除session
+		public function delSession(){
+			dump(Session::delete("data"));
+			\session("name",NULL);
+		}
+	5,清空session
+		//清空session
+		public function clearSession(){
+			Session::clear();
+			\session(null);
+		}
+4,Cookie
+	1,cookie设置  config.php下的设置
+			// +----------------------------------------------------------------------
+		// | Cookie设置
+		// +----------------------------------------------------------------------
+    'cookie'                 => [
+        // cookie 名称前缀
+        'prefix'    => '',
+        // cookie 保存时间
+        'expire'    => 0,
+        // cookie 保存路径
+        'path'      => '/',
+        // cookie 有效域名
+        'domain'    => '',
+        //  cookie 启用安全传输
+        'secure'    => false,
+        // httponly设置
+        'httponly'  => '',
+        // 是否使用 setcookie
+        'setcookie' => true,
+5,分页
+	1,控制器
+	2,页面
+6,文件上传
+	1,控制器
+	2,页面
+7,验证码
+	1,检测tp是否安装了扩展包
+	2,生成验证码
+	3,验证码验证
+	4,验证码相关设置
+8,图片处理
+	1,检查是否安装了图片处理扩展
+	2,
+	

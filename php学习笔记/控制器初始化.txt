@@ -1,0 +1,163 @@
+控制器
+1,新建控制器
+	前台为例
+	1,声明命名空间
+	2,写类
+	3,方法
+2,注意
+	1,文件名首字母大写
+	2,控制器名字与文件名相同
+	3,命名空间必须和文件名对应    
+	4,如果使用了驼峰命名的话  现在基本没问题
+3,控制器如何加载页面
+	1,系统view类
+		use \think\View;
+		  $view = new View();
+        //使用系统类\think\View;
+        return $view->fetch();
+	2,系统controller类
+	通过继承系统类来使用类中的方法
+		use \think\Controller;
+		class user extends Controller{
+			public function loadView(){
+				return $this->fetch();
+			}
+		}
+	3,系统方法
+		//使用系统函数view()
+        return view();
+		
+4,数据的输出
+可以设置默认返回类型config.php文件中 default_return_type
+ajax如何返回数据
+
+	1,字符串输出就那样
+	2,输出数组 应该使用json
+		return json_encode(array)
+	3,控制器的初始化
+		_initialize()方法
+		1,首先必须继承系统控制器
+		2,只要调用当前控制器任意方法,都会先找初始化的方法
+		3,初始化方法用法:
+			1,提取公共部分在初始化部分进行初始化
+			2,后台把控
+5,前置操作
+	指定某些操作方法调用时 提前调用一部分方法
+	1,注意 必须继承Controller类
+	class UserInfo extends Controller {
+    protected $beforeActionList=[
+        "indexBefor1",
+        "indexBefor2"=>["only"=>"index"],//仅仅允许index方法调用
+        "indexBefor3" => ["except"=> "index"]//不允许index方法调用
+    ];
+
+    public function index(){
+        return "Userinfo控制器默认方法";
+    }
+
+    public function indexBefor1(){
+        echo "index前1<br />";
+    }
+
+    public function indexBefor2(){
+        echo "index前2<br />";
+    }
+
+    public function indexBefor3(){
+        echo "indexBefor3<br />";
+    }
+
+}
+6,页面跳转
+	1,成功跳转
+		if($username == "admin"&& $passwd = "123"){
+            //跳转thinkphp/traits/controller/jump.php
+            /*
+                mas 跳转成功的提示信息
+                url 跳转地址
+                data 数据
+                wait 等待时间
+                header 头文件
+            */
+            //success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
+            //如果不设置跳转地址 则默认返回上一个页面
+            $this -> success("跳转成功");
+        }else{
+            $this -> error("跳转失败");
+        }
+	2,失败跳转
+		  $this -> error("跳转失败");
+		
+	3,修改登录成功或失败的模板页面
+		找到默认模板页面
+		并添加一些东西就ok了
+		2,指定页面
+			修改配置文件 ,指定调跳转页面
+			在系统模板路径下新建了sucess和error页面
+	4,跳转方法给模板页面的方法 
+		1, $code 状态码 成功1 
+						失败0
+		2,$msg 提示信息
+		3,$data
+		4,$wait 等待时间
+		5,$url 跳转位置
+7,重定向 
+		1,作用:通过某些方法将各种网络请求重新定个方向转到其他位置
+		2,使用
+			protected function redirect($url, $params = [], $code = 302, $with = [])
+			redirect("跳转地址",其他参数,httpcode,隐式传参)
+8,空控制器和空操作
+	1,如果访问了没有的控制器和空方法导致页面报错, 使得用户没有良好的用户体验
+			或者是应对用户恶意输入地址栏
+	2,空操作
+		 public function _empty(){
+				$this->redirect("index/index/index",["id"=>"23"]);
+		}	
+			
+	3,空控制器 
+		class Error extends Controller {
+			public function index(){
+				$this->redirect("index/index/index");
+			}
+			public function _empty(){
+				$this->redirect("index/index/index");
+			}
+		}
+		
+	4,注意 : 网站上线的时候 每一个控制器都必须有空操作
+			2,无论前台后台 都需要一个空控制器
+9,使用命令行
+	1,切换到网站根目录
+	2,输入php think可以输出 就没问题
+	3,创建控制器 : >php think make:controller 路径 (app\index\controller\Goods)
+	4,创建数据模型: > 类似于上面 make:model 路径
+	5,清空临时文件即runtime下面的temp文件夹下的文件 
+			php think clear
+10,资源控制器 
+	1,使用命令行创建控制器
+	2,资源控制器一般配合资源路由使用
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

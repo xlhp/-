@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- web.xml_Demo -->
+<web-app><!-- 根元素  -->
+	<!-- 当客户访问Web应用时,如果仅仅给出Web应用的Root URL 没有指定文件名,则会主动调用Welcome文件,一个welcome-file-list
+	可以有多个welcome-file 如果客户访问 若第一个存在 则会调用第一个,如果不存在 则调用第二个 依次类推,如果都不存在 则返回404 -->
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>SampleServlet</servlet-name><!-- servlet的名字 -->
+		<servlet-class>mypack.SampleServlet</servlet-class><!-- 指定实现servlet的类 -->
+		<!-- init-param是用来初始化参数 同一个servlet种可以有多个init-param-->
+		<init-param>
+			<!--  name是参数名,value是初始化值, -->
+			<param-name>initParam1</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<!-- 当Web应用启动时,如果是整数或0时 ,按照顺序加载,如果时负数或者没有定义,则在第一次访问servlet
+		时进行加载 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 配置servlet映射 -->
+	<servlet-mapping>
+		<!-- 定义的名字,应该与相应的servlet中的名字相对应 -->
+		<servlet-name>SampleServlet</servlet-name>
+		<!-- 用户访问的URL -->
+		<url-pattern>/sample</url-pattern>
+	</servlet-mapping>
+	<!-- 只有一个子元素 用来设定HTTPSession(会话),若不活动时间超过该设定时间(秒) 则将该Session视为无效Session处理 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<!-- 该元素用来设置Web应用所引用的Tag Library -->
+	<taglib>
+		<!-- 设定Tag library的唯一表示符,在Web应用中将根据这一标识符来引用Taglibrary -->
+		<taglib-uri>/mytaglib</taglib-uri>
+		<!-- 指定和 Tag Library对应的Tld文件的位置 -->
+		<taglib-location>/WEB-INF/mytaglib.tld</taglib-location>
+	</taglib>
+	<!-- 配置资源引用  如果Web应用访问了由Servlet容器管理的某个JNDI Resource,则必须在web.xml文件中声名对这个JNDI Resource的引用
+	表示资源引用的元素为<resource-ref>-->
+	<resource-ref>
+		<!-- 对所引用的资源的说明 -->
+		<description>DB Connectioin</description>
+		<!-- 指定所引用资源的JNDI名字 -->
+		<res-ref-name>jdbc/sampleDB</res-ref-name>
+		<!-- 指定所引用资源的类名字 -->
+		<res-type>javax.sql.DataSource</res-type>
+		<!-- 指定管理所引用资源的Manager,由两个选值:Container和Application
+		Container表示由容器来创建和管理资源,Application表示由web应用创建和管理资源 -->
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<!-- 用来为Web应用定义安全约束:以下代码知名当前用户访问该Web应用下的所有资源时,必须具备guest -->
+	<security-constraint>
+		<!-- 声明受保护的Web资源  -->
+		<web-resource-collection>
+			<!-- 声明受保护的Web资源 -->
+			<web-resource-name>sample application</web-resource-name>
+			<!-- 只当受保护的URL路径 -->
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<!-- 声明可以访问受保护资源的角色,可以包含多个<role-name>元素 -->
+		<auth-constraint>
+			<role-name>guest</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<!-- 配置安全验证登陆界面:login-config元素指定当Web客户端访问受保护的Web资源时,系统弹出的登陆对话框的类型 -->
+	<login-config>
+		<!-- 指定验证方法:(取值)BASIC(基本验证),DIGEST(摘要验证),FORM(基于表单的验证) -->
+		<auth-method>FORM</auth-method>
+		<!-- 指定安全域的名称 -->
+		<realm-name>Form-based Authentication Area</realm-name>
+		<!-- 当验证方法为FORM时,配置验证网页和出错网页 -->
+		<form-login-config>
+			<!-- 当盐泽合众国(验证方法为)FORM时,设定验证网页 -->
+			<form-login-page>/login.jsp</form-login-page>
+			<!-- 当验证方法为FORM时,设定出错网页 -->
+			<form-error-page>/error.jsp</form-error-page>
+		</form-login-config>
+	</login-config>
+	<!-- 配置对安全验证角色的引用:该元素知名这个Web应用引用的所有角色的名字 -->
+	<security-role>
+		<descriptioin>
+			The role that is required to log in to the sample Application
+		</descriptioin>
+		<role-name>guest</role-name>
+	</security-role>
+</web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+​		

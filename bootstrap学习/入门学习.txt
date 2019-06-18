@@ -1,0 +1,206 @@
+说明:
+	bootstrap本身对于很多标签进行了修改,所以会不同
+1,安装
+	1,安装
+	2,必须是html5文档类型
+		<!DOCTYPE html>
+	3,移动端的真实宽度
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	4,栅格系统:
+		1,布局容器 .container
+		2,栅格系统概念说明 将1140 分割成12个小格
+			md:当在一行中被侵占到最小范围时,后面的自动换行(常用md)
+			xs:不论屏幕有多小, 所有元素不换行,持续性变小
+			sm:先进行缩小  然后无法缩小时,进行换行
+			lg :只要侵占大小 则会换行
+		3, .row  里面用col-md-4 占三列的宽
+		4,列偏移 col-md-offset-1
+		5,pull-right /pull-left  左右浮动
+	5,排版
+		1,标题(.page-header)
+			源码:
+				padding-bottom: 9px;
+				margin: 40px 0 20px;
+				border-bottom: 1px solid #eee;
+		2,段落(.lead)  着重强调	
+			源码:
+				margin-bottom: 20px;
+				font-size: 16px;
+				font-weight: 300;
+				line-height: 1.4;
+		3,mark标记
+			背景有一点改变,相当于对文字的标记
+			
+		4,del删除线
+			给文字加上删除线
+		5,s无用文本
+		6,u下划线
+		7,small 小号字体
+			相对于原本的文字小一号  颜色不是纯黑色
+		8,文本对齐 
+			1,text-left
+			2,text-right
+			3,text-center
+			4,text-justify  两段对齐  就是将文字散到两段
+		9,文本大小写
+			1,text-lowercase	都转成小写
+			2,text-uppercase	:每个字母大写
+			3,text=capitalize : 每个单词首字母大写
+		10,列表 
+				1,有序列表
+				2,无序列表
+				3,无样式列表   list-style:none;
+				4,内联标签 ,就是上面的横向导航栏    display : inline-block
+		11,自定义列表
+			<!-- 自定义列表/内嵌列表 -->
+				<dl>
+					<!-- 自定义列表的标题 -->
+					<dt>选择题</dt>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+				</dl>
+		12,水平排列列表  相较于自定义列表  就是提供了一些样式
+			<!-- 水平自定义列表/内嵌列表 -->
+				<dl class="dl-horizontal">
+					<!-- 自定义列表的标题 -->
+					<dt>选择题</dt>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+					<dd>a:zhongguo</dd>
+				</dl>
+	6,代码
+		1,code   
+			<code>linux</code> is much !
+		2,pre
+			<!-- pre  按照原格式输出 -->
+			<p><pre>if($di >1){
+				
+			}</pre></p>
+		3,kbd  : 将包含的内容编程黑背景 白字
+			<p>
+				按<kbd>ctrl+shift</kbd> 获取最大值
+			</p>
+		4,var
+			<!-- var 就是斜体 -->
+				按<var>ctrl+shift</var> 获取最大值
+	7,表格
+		1,.table  表格的样式
+			<!-- table-striped :个一行进行改变背景
+				table-bordered : 变成单元格
+				table-hover : 鼠标进入的时候会变动
+			 -->
+			<table class="table table-striped table-bordered table-hover">
+		2,状态类	就是五种颜色
+			.active
+			.success
+			.info
+			.waring
+			.danger
+		3,响应式表格
+			.table-responsive
+			当表格内容比较大时,缩小表格已经无法满足时,  使用这个可以让表格下面出现下划线
+			使用: div class=".table-responsive"  
+	8,按钮
+			1,基本样式(颜色)
+				.btn
+				.btn-default
+				.btn-primary
+				.btn-success
+				.btn-warning
+				.btn-info
+				.btn-danger
+				.btn-link
+			2,块级按钮
+				.btn-block
+			3,按钮大小
+				.btn-lg
+				.btn-sm
+				.btn-xs
+			4,禁用按钮
+				属性 disabled
+			5,可以做按钮的元素
+				1,a链接
+				2,input type="button"
+				3,submit
+				4,reset
+	9,图片
+			1,圆角图片
+				img-rounded
+			2,圆形
+				img-circle
+			3,加一个百色边框
+				img-thumbnail
+	10,辅助类
+			1,text系列的 字体颜色
+				.text-muted
+				.text-danger
+				.text-success
+				.text-info
+				.text-warning
+				.text-primary
+			2,bg系列  背景颜色
+				.bg-primary
+				.bg-success
+				.bg-info
+				.bg-warning
+				.bg-danger
+			3,关闭按钮
+				.close   就是一个关闭效果
+				<p class="bg-danger">close all windows  <span class="close">&times</span></p>
+				一般搭配与&times  易出现关闭  
+			4,更多
+				.caret
+				多搭配按钮  来实现效果
+			5,清除浮动
+				.clearfix
+			6,内容居中
+				.center-block      
+				作用类似于margin:0  auto;
+			7,显示与隐藏
+				.hide
+				.show
+2,全局css样式
+	
+	css样式
+	文本颜色
+		1,text-muted
+		2,text-primary
+		3,text-success
+		4,text-info
+		5,text-warning
+		6,text-danger
+	图片
+		1,img-rounded
+		2,img-circle
+		3,img-thumbnail
+	背景颜色
+		1,bg-primary
+		2,bg-success
+		3,bg-info
+		4,bg-warning
+		5,bg-danger
+	关闭
+		.close
+	三角
+		.caret
+	浮动
+		
+3,css组件
+	
+4,javascript插件
+
+
+
+
+
+
+
+
+
+
+
+
+

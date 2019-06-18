@@ -1,0 +1,54 @@
+# AJAX
+
+[TOC]
+
+
+
+### 基础学习
+
+1. 基本概念:
+
+   Ajax : asynchronization javaScript and XML  异步使用javascript获取XML
+
+   ​	主要使用方向是获取xml和json数据
+
+2. 类似库/技术:jq,AXIOS ; Fetch API ....
+
+3. 
+
+### ajax向后台传值基本例子
+
+```js
+ //ajaxdemo
+   var buts = document.getElementsByClassName("but");
+    for (var i = 0; i < buts.length; i++) {
+        buts[i].addEventListener("click", function () {
+            var ajax = new XMLHttpRequest();
+            console.log(this.value);
+            ajax.open("post", "/littleProject01_war_exploded/info", true);
+            var sendInfo = "username=" + this.value;
+            ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded;");
+            ajax.send("username="+this.value);
+        });
+    }
+```
+
+
+
+
+
+### ajax使用过程中出现的问题
+
+1. 使用ajax   post方法向后台传值时 : 请注意在send之前设置Context-type 属性
+
+   ```js
+   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded;");
+   ```
+
+### json 使用包
+
+1. json-lib.jar
+2. commons-beanUtils.jar
+3. commons-lang.jar
+4. ezmorph.jar
+5. commons-collections.jar

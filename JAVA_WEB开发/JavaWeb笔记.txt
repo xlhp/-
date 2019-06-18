@@ -1,0 +1,501 @@
+# javaEE基础
+
+## javaEE知识
+
+### javaEE分层
+
+1. #### 简单MVC分层
+
+   1. WEB  Controller   view
+   2. 业务逻辑  model
+   3. 数据访问层  model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## web开发基本知识
+
+/******************************************************
+
+
+下面是关于web开发常识拒绝说不会
+
+
+******************************************************/
+	TCP/IP体系结构(协议族):
+					物理层:转发器
+					数据链路层:封装成帧,透明传输,差错检测,点对点(PPP)协议,MAC地址,交换机,网桥,桥接器
+					网络层:IP(网际协议),IP协议配套协议:ARP(地址解析协议),ICMP(网际控制报文协议),IGMP(网际组管理协议),路由器,IP v4->IP v6方法:双协议栈,隧道技术
+					运输层:TCP协议,UDP协议,端口号
+					应用层:DNS域名系统,FTP文件传输协议,TFTP简单文件传输协议,TELNET远程终端协议,超文本传送协议HTTP,简单邮件传送协议SMTP,动态主机配置协议DHCP,简单网络管理协议SNMP
+	HTTP:超文本传输协议
+	URL：统一资源定位器
+	URL组成：(应用层协议)://(主机IP地址或域名)/(资源所在路径)/(文件名)
+	TCP协议：面向连接安全可靠（报文段）      UDP协议：无连接的不可靠尽最大努力（用户数据报）
+		HTTP 请求分为三部分：
+					请求方法，URL，HTTP协议版本
+					请求头（Request Header）
+					请求正文(Request Content)
+
+		请求方式：GET：最常用
+				  POST：客户程序发送大量信息给服务器
+				  HEAD：用于在客户程序和服务器之间交流一些内部数据，该数据不会影响用户浏览网页，对于用户来说是透明的。HEAD一般不单独使用
+						常见用途：一些搜索引擎使用HEAD请求方式来获得网页的标志信息，还有一些HTTP服务器在进行安全认证时用这个方式来传递认证信息
+				  PUT：客户程序通过这种方式吧文档传给服务器
+				  DELETE：客户程序通过这种方式来删除远程服务器上的某个文档
+				  注：该方法PUT和DELETE不常用
+		请求头（ Request Head）：请求头包含许多关于客户端环境和请求正文的有用信息。
+		请求正文：HTTP协议规定 请求头和请求正文之间必须以空行分隔（即只有CRLF符号的行）  在请求正文中包含着客户已POST方式提交的表单数据
+		
+		HTTP响应格式：三部分构成：
+					HTTP协议版本，状态代码和描述
+					响应头：Response Header
+					响应正文：Response Content
+				状态码：1XX：信息提示，表示临时的响应
+						2XX：响应成功
+						3XX：重定向
+						4XX：客户端错误，表明客户端可能有问题
+						5XX：服务器错误，表明服务器遇到某种错误而不能响应客户端请求
+					常用：200 响应成功
+						  400 错误请求，客户端发送的HTTP请求不正确
+						  404 文件不存在，在服务器上没有客户要求访问的文档。
+						  405 服务器不支持客户的请求方式
+						  500 服务器内部错误
+				响应头：返回服务器的一部分信息和响应正文内容
+				响应正文：服务器返回的具体数据
+
+
+​				
+​		正文部分的MIME类型
+​			MIME：多用途网络扩展协议(从SMTP简单邮件传送协议上扩展来)
+
+
+​			
+​			
+​			
+​			
+​		session(会话): 每个浏览器独占一个session
+​		Cookie是吧用户的数据写给用户的浏览器
+​		Session是吧用户的数据写到用户独占的Session
+​		session对象有服务器创建,并通过cookie将session的id号传给浏览器
+​	<!---------------uri和url------------------------>
+​	url和 uri的区别  url可以说是uri的子集  url是通过定位从而确认一个人  uri是通过一个绝对不会重复的编号来实现的 uri还包括一个urn
+​	参考:https://www.zhihu.com/question/21950864
+​	<!--------------------------------------->
+​	
+​	<!----------------关于eclipse导入文件----------------------->
+​	1，简单粗暴：直接自己创建包和类 复制粘贴
+​	2，对于带有完善配置文件的文件 ，可以选择 import -> Gerenal-> Existing project into workspace
+​	3，对于没有完善配置文件的工程文件 ，可以自己创建包然后File-》import-》File system 
+​	<!--------------------------------------->
+​	
+	<!----------------菜逼还没学会的cmd命令行----------------->
+	dir 查看当前目录的文件和文件夹 /s 
+	cd：进入特定目录
+	cd\ 退回根目录
+	cd..  :退回上级目录
+	cls ：清除屏幕
+	copy：吧一个文件拷贝到另一个地方
+	move ：移动一个文件
+	del：删除
+	deltree：删除文件夹和他下面所有子文件夹和文件
+	format 格式化某个分区
+	
+	ping 
+	net：
+	netstat：查看主机当前的tcp/ip连接状态如端口占用
+	nbtsta:查看主机使用的netbios name
+	tracert :查看从你的主机到某个网址经过了那些路径(路由追踪)
+	pathping:类似于tracert 但可以显示出更多东西
+	ftp:?????
+	telnet:字符方式的远程登陆程序,是网络人员极其爱用的远程登陆程序
+	ipconfig:非常有用的网络配置,排错  命令
+	
+	<!-------------------------------------------------------->
+	
+	<!----------------------web应用概念理解---------------------------------->
+	概念:通过编程来创建的web站点
+	特点:以浏览器来作为展示客户端界面的窗口
+		 客户端界面一律表现为网页形式,网页由HTML语言写成,具有交互功能
+		 能完成与桌面程序类似的功能
+		 使用浏览器-服务器架构,浏览器和服务器之际爱你采用HTTP协议通讯
+		 web应用通过web服务器来发布
+
+
+​		 
+​	Web服务架构采用SOAP(简单对象访问协议) 作为通信协议
+​	SOAP协议规定:客户与服务器之间一律用XML语言进行通信.
+​	XML:可扩展标记语言
+​		
+​	Web服务???不理解
+​	Web2.0  范畴
+​			博客,RSS(站点摘要),WIKI(百科全书),SNS(社交网络软件),IM(即时通讯)
+​	
+	<!-------------------------------------------------------->
+	表单提交:method:确定是post方法还是get方法
+			 action:指定在用户提交表单时,浏览器访问的URI
+		get方法 将参数放在紧跟在HTTP请求的第一行
+		post方法会将参数放在HTTP请求的正文部分
+		表单的enctype属性的默认值:application/x-www-form-urlencoded
+						该属性是用于指定表单数据的MIME类型
+	<!------------------------------------------------------------>
+	
+	<!---------------客户端向服务器发送文件----------------------->
+	HTML表单设计:method属性 post
+				 enctype:用于指定表单数据的MIME类型 此处使用MULTIPART/FORM-DATA 表示表单数据为符合类型的数据,包含多个部分(part)
+				 action
+	<!------------------------------------------------------------>
+	
+	<!------------------------关于FTP协议------------------------->
+	可以参考博客:https://blog.csdn.net/aaron133/article/details/78508211
+				或者:https://blog.csdn.net/xu735456/article/details/54846239
+		TCP:基于tcp协议(传输层)属于应用层协议
+		TFTP(简单文件传输协议):基于UDP协议(传输层)属于应用层协议
+		FTP协议的特点:通过两个Socket链接 将命令和数据分开传送 以提高效率
+		两个端口:数据端口和命令端口,一般是:数据端口(20),命令端口(21)
+		两种模式:(相对与client来说)
+		主动模式(port):client打开两个端口 让服务器链接
+		被动模式(pasv):服务器打开两个端口 并通知client来链接
+	<!------------------------------------------------------------>
+
+
+  域名解析过程: 缓存空间->cookie中查找->host文件->网关中找->本地域名服务器->上级域名服务器 ->直到找到
+  ip+端口号 = 插口
+  浏览器随机生成一个端口号与服务器链接
+  将网页信息打成数据包传递出来 发送至
+
+/******************************************************
+
+下面是关于Javaweb的信息
+
+******************************************************/
+
+<!-------------------Tomcat服务器----------------------------->
+tomcat 服务器  
+解压到一个非中文目录下
+Java 环境变量一定要有JAVA_HOME
+然后cmd  调到解压目录的bin中  启动startup
+使用localhost：8080  检验是否配置完成
+若 已经启动一个tomcat应用  若在启动一个  会抛出端口被占用异常
+
+Tomcat  典型的servlet服务器 
+
+通过conf 里面的server.xml 文件中的配置信息可以更改很多东西  比如:端口号
+
+再计算机环境下配置tomcat
+
+Tomcat工作流程:
+		1),客户端发出访问Servlet请求
+		2,Servlet容器接收到客户端请求,对其解析
+		3,Servlet容器创建一个ServletRequest对象(包含请求头,请求正文,客户机IP...)
+		4,Servlet容器创建一个ServletResponse对象
+		5,Servlet容器调用客户端所请求的Servlet的service()服务方法,并且把ServletRequest对象和ServletResponse作为参数传给该服务方法
+		6,Servlet从ServletRequest对象中可获取客户的请求参数
+		7,Servlet利用ServletResponse对象来生成响应结果
+		8,Servlet容器把Servlet生成的响应结果发送给客户端
+<!-------------------------------------------------------------->
+<!-------------------------xml---------------------------------------->
+可扩展标记语言:xml
+标准通用标记语言SGML
+超文本标记语言HTML
+文档类型定义(Document type definition):DTD
+XML文档:1,简化格式的XML文档
+		2,有效的XML文档
+<!------------------------------------------------------------------>
+
+
+
+<!-------------------------web.xml文件------------------------------------->
+遗留问题:TDL文件 , tagLibrary库????
+Web应用发布描述性文件(web.xml)在servlet规范中定义,他是Web应用的配置文件。web.xml中的元素和Tomcat容器完全独立
+web.xml定义的元素:
+			<web-app>:Web应用的根元素
+			<display-name>:Web应用的名字
+			<description>:对Web应用的描述
+			<filter>:定义过滤器
+			<filter-mapping>:为过滤器指定URL映射
+			<servlet>:定义Servlet
+			<servlet-mapping>:为sesrvlet指定URL映射
+			<session-config>:配置HTTP会话
+			<welcome-file-list>:设置Webing用的Welcome文件清单
+			<taglib>:声明引用的标签库
+			<resource-ref>:声明引用的JNDI资源
+			<security-constraint>:配置安全约束
+			<login-config>:配置安全验证登陆界面
+			<secruity-role>:配置安全角色
+	<%"注意:"在web.xml中 元素定义的小先后顺序不能颠倒,否则Tomcat会抛出SAXParseExcetpion错误%>
+	web.xml中的开头往往是固定的,他定义了该文件的字符编码,xml的版本以及引用的DTD(文件类型描述)文件
+	顶层元素为<web-app>
+	
+
+	例子:D:\Java\文件\web.xml
+<!------------------------------------------------------------------------->
+Javaweb简介:
+			Servlet组件
+			JSP组件
+			相关的java类
+			静态文档
+			客户端类
+			web.xml
+			
+
+<%@指令 %>
+<%！声明 %>
+<%这是一个脚本%>
+<%=表达式%>
+<%--  注释 --%>
+
+
+编译指令：
+page:定义全局属性
+include：<%@ inlcude file="  "%>  静态包含
+taglib:自定义标签
+
+动作指令：
+jsp:include:动态包含
+jsp:forward:类似与jsp:include
+jsp:param:使用在动作指令：include ,forward,plugin  
+jsp:useBean 在jsp页面中创建一个javaBean实例
+jsp:getProperty：读取Bean的属性值 并将其转换为一个字符串输出到页面上
+
+
+<jsp:useBean id="" scope="" class=""/>
+<jsp:useBean id="con_info" scope="session" class="datasourceDemo.ConnMysqlDemo"  />
+id:该属性关联指定范围的实例化对象,区分大小写
+scope:实例所在的范围:page request session application
+		 page:存在于pageContext对象中,只对当前jsp页面有效
+		 request:存在于ServletRequest中,同一个请求的所有servlet和jsp页面有效
+		 session:存在于HttpSession中,同一个会话的所有Servlet和JSp页面有效
+		 application:存放在ServletContext中,同一个Web应用程序中的所有servlet和JSP有效
+
+
+
+关于get和post方法区别：
+表单提交中get和post方式的区别有5点 
+	1.get是从服务器上获取数据，post是向服务器传送数据。 2.get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTPpost机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。 
+	3.对于get方式，服务器端用Request.QueryString获取变量的值，对于post方式，服务器端用Request.Form获取提交的数据。 
+	4.get传送的数据量较小，不能大于2KB。post传送的数据量较大，一般被默认为不受限制。但理论上，IIS4中最大量为80KB，IIS5中为100KB。 
+	5.get安全性非常低，post安全性较高。
+
+
+java web  关于dopost提交之后汉字乱码的问题
+1，user_name = new String(request.getParameter("USER").getBytes("ISO-8859-1"),"UTF-8")通过制作字符串将iso-8859-1 编码格式的字符串转换为 utf-8格式 从而规避乱码
+2，使用request.setCharaterEncoding("UTF-8");设置编码格式为utf-8
+
+java web 关于get方法表单提交后汉字乱码问题
+get返回服务器的数据是 例如：http://localhost:8080/servlet?name=丁兆顺&age=45
+但是因为默认使用iso-8859-1编码，所以中文格式会成为乱码
+方法1 ，首先通过request.getQueryString（）获取表单传回的URL  然后通过java.net.URLDecoder.decode(str,"utf-8")转换格式
+方法2，修改tomcat conf目录下的server.xml配置文件找到<Connector>标签	 在post后面添加URLEncoding属性，
+
+
+load-on-startup   来确定初始化时web服务器加载顺序  必须时整数
+若为负数，则在第一次请求时创建，若为0或整数，则在servlet创建时加载
+
+Servlet容器：运行Servlet，jsp，Filter 等软件环境
+1.可以创建servlet 并调用servlet相关点生命周期方法
+
+4，servlet生命周期有关等方法s
+1，构造器：第一次请求servlet时 创建servlet实例，调用构造器
+这说明servlet时单实例等
+2，init方法：只被调用一次，在创建实例后，立即别调用，用于实例化Servlet
+3，destroy：调用一次，用于释放资源
+4，service：多次调用，用于请求调用
+
+
+
+关于servlet mapping
+1，同一个servlet 可以映射到多个url上
+2，servlet  mapping  *.html  带扩展名不能带/
+
+
+Servlet的生命周期：服务器启动时，容器会定位Servlet类 然后加载它  进行实例化
+	init（） 方法	用于初始化 （初始化的方式就是调用init（）函数）如果Servlet配置未在web服务器启动时自动启动，那么他的init（）方法也将会被调用。否则init()方法也会被调用，否则init()方法将会在他接收第一次请求访问他接收的Servlet时调用
+	<sevlet>
+		<servlet-name>servlet_name</servlet-name>
+		<servlet-class>url/servlet</servlet-class>
+		<load-on-startup>1</load-on-startup><!-- load-on-startup 用来设置web服务器启动时加载顺序，如果该实例使用了该属性，web服务器就会在启动的时候就按该顺序加载servlet-->
+	</servlet>
+	初始化异常：一般抛出ServletException和UnavailableException  
+
+	service（）方法  不同的web容器  对应的service方法也不一样，用户自行开发servlet时  可以从httpservlet派生新类  因为httpservlet实现了http请求的service（）方法	开发者只需要重新调用dopost或者doget即可
+	service方法  会出现一般出现两种错误：ServletException和UnavailableException
+		ServletException  ： Servlet进行常规操作出现错误
+		UnavailableException ：无法访问当前Servlet  如果是暂时的 web容器都会返回一个503 服务器繁忙   如果是永久性的，就会调用destroy（）方法释放该实例，并返回404 请求资源不可用。
+
+
+​		
+​		
+HttpServletRequest
+​	String getParameter（String name）；
+​	String[] getParameterValues(String name);
+​	Enumeration getParameterNames();
+​	Map getParameterMapa();
+​	String getQueryString（）；
+​	
+​	get 方式  传递形式
+​					1，地址栏直接给出参数 
+​					2，超链接给出参数
+​					3，表单中给出参数
+​	post方式  传递形式：
+​					表单中给出参数
+​					
+​	关于get方法提交信息  现在xml里面将servlet配置完成 然后 超链接href="(servlet的url-pattern路径)?(参数名)=(值)"
+
+
+​	
+​	
+<!------------------------------------------------------------------------------------------------------->
+sql注入:https://blog.csdn.net/lxzpp/article/details/80521332
+   通过破坏sql语句的执行逻辑 来实现无账号登录或者实现修改数据库内容  解决方法或详细信息在上方链接中有说明
+<!-------------------------------------苦逼的分割线-------------------------------------------------------------->	
+创建过滤器：  必须实现javax.servlet.Filter接口  
+​				实现方法：  init(); 用于初始化过滤器，他可以访问过滤器的配置，初始化参数和ServletContext，正如Servlet的init（）方法一样
+​				
+
+
+
+
+关于自定义标签:
+			
+<!---------------------------------------------------->
+上传文件使用:fileupload.jar和commons-io.jar 
+
+<!---------------------------------------------------->
+
+
+​			
+​			
+关于下载和上传文件:需要使用javaio,建议复习,基础的javaio参考文件:D:\31284\笔记\IODemo.java
+​		下载:具体参考 D:\31284\笔记\DownloadFileDemo.java
+​			原理 通过javaio来实现  
+​			1,首先通过getParameter()方法获取请求数据
+​			2,判断下载文件是那个(该例没有实现,但是可以实现)
+​			3,然后通过ServletContext对象调用getResourAsStream()方法 创建一个iniputstream对象通过available()方法获取文件最大的字节数,相应头文件正文要用
+​			4,设置相应的MIME
+​			5,通过response对象的getOutputStream()方法创建一个outputstream对象从将文件写到相应正文中,达到下载的目的
+​		关于上传文件 虽然html5支持上传文件的表单就如同表单提交一样,是一个表面看的,无法真是的处理文件,他只是负责将文件写入到请求流里面,
+​		
+​		问题1:现在还没搞懂为什么会出问题,从eclipse中启动服务器的时候会出现 LifecycleException 错误我是重新创建一个项目将代码move到新项目中 具体原因不明
+​		
+​		问题2:出现FileUploadBase$InvalidContentTypeException错误 the request doesn't contain a 		multipart/form-data or multipart/mixed stream, content type header is application/x-www-form-urlencoded 
+​			放弃了 百度的他们都是content type header is null 按照他们说的 根本无法解决
+
+
+​		
+Javaweb 访问数据库:
+​		jdbc常识:
+​				JDBC驱动管理器:Java.sql.DriverManager类 负责注册特定JDBC驱动器
+​				JDBC驱动器API:主要接口是java.sql.Driver 
+​				JDBC驱动器(JDBC驱动程序):JDBC驱动器实现了JDBC驱动器API,负责与特定的数据库链接以及处理通信细节,他可以注册到JDBC驱动管理器中   
+​				
+​				按照访问速度排序:第一:完全由java编写的类库,他按照特定数据库的协议把请求发送给数据库服务器
+​								 第二:完全由java编写的类库,他用一种与具体数据库服务器无关的协议将请求发送你给服务器的特定组件
+​								 再有该组件按照特定数据库的协议对请求进行翻译
+​								 第三:部分java代码与部分本地代码组成
+​								 第四:JDBC-ODBC驱动器
+​								 
+​			url后缀的常用属性:1,useUnicode=true&characterEncoding=UTF-8:表示支持的编码标准,可是显示中文
+​							  2,serverTimezone :用来设置时区 一般东八区用GMT  
+​							  3,useSSL:(ssL:安全套接字层)用于指明是否进行SSL链接 true / false
+​		最终访问成功  如果  错误问题请参考web错误笔记  代码参考:javaweb链接数据库源码文件夹
+​		部分链接数据库信息参考java笔记中链接数据库中的一部分
+
+preparedstatment(sql)  
+execute()  执行preparedstatement 对象中的语句  不论什么类型
+executeUpdate() 返回一个int类型的值
+---------------------------------------------------------------------
+
+
+数据源:javax.sql.DataSource接口 负责建立与数据库的链接,当在应用程序中访问数据库时不必编写链接数据库的代码,可直接从数据源获得数据库链接
+DataSource通常是由Servlet容器提供的
+JNDI:
+
+
+java.naming.Context context = new InitialContext();
+DataSource data = context.lookup("java:comp/env/+resourcename");
+java.sql.Connection conn = data.getConnection();
+
+
+
+关于cookie:resp.addCookie(new Cookie("name","value"));//用于创建cookie并将cookie返回到客户端保存
+			cookie_obj.setMaxAge(毫秒数);//可以设置cookie文件存在的时间
+			可以通过setValue();来更改cookie值,然后再次使用resp.addCookie() 即可更改cookie值
+			
+			cookie通过服务器来进行更改,会有安全隐患,所以一般浏览器都会可以设置禁用cookie
+
+重定向:返回一个状态码为302的响应结果,响应结果中包含一个新的web组件的url,浏览器接收到这种响应结果后,在立即自动访问另一个web组件,并接收另一个we		组件的响应结果
+
+
+
+
+
+
+配置数据源:需要修改context.xml和 web.xml文件 
+首先在meta-inf 文件夹下创建一个context.xml文件 :源文件参考:
+<!----------------------关于JSTL标签库-------------------------------------------->
+
+
+
+
+<!-------------------------------------------------------------------------------->
+Struts和MVC
+MVC 不适合小项目 通过这种设计思想构造良好的松耦合的构件
+jspmodel1 和 jsp model 2 
+Struts:实质上就是在jsp model2 基础上实现的MVC框架     http://struts.apache.org 下载地址 感觉就是别人写好的 学着用就完了 
+		1,视图:一组jsp文件
+		2,模型:表示应用程序的业务数据和业务逻辑,对于大型应用,业务逻辑通常由Javabean或Ejb组件实现
+		3,控制器:
+		4,Struts的配置文件struts.xml 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

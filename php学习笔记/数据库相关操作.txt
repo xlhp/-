@@ -1,0 +1,171 @@
+1,tp支持的数据库种类
+    
+2,如何连接
+    1, 配置文件
+		application/database.php 配置文件
+	使用
+		$db = new Db();
+        $data = $db::table("User");
+        dump($data);
+        $data = $data->select();
+        dump($data);
+	
+	2,方法配置
+		/*
+	 * 使用方法链接数据库 需要调用Db::connect 方法创建一个Connection 对象
+	 * 然后调用Connection类的方法
+	 * thinkphp/think/db/Connection.php
+	 *
+	 */
+	public function methodConn(){
+	    $conn = Db::connect(
+	        [
+	            "type" => "mysql",
+	            "hostname" => "127.0.0.1",
+	            "database" => "tpStudy",
+	            "username" => "root",
+	            "password" => "root",
+	            "hostport" => "3306"
+	        ]
+	    );
+		//dump($conn);
+	    dump($conn->query("select * from user"));
+	
+	    dump($conn->table("user")->select());
+	}
+	
+	使用字符串创建配置信息
+		 //数据库类型://用户名:密码@数据库地址:数据库端口/数据库名#字符集
+	    $conn = Db::connect("mysql://root:root@127.0.0.1:3306/tpStudy#utf8");
+	
+	3,模型类定义
+		创建
+			1,命令行创建
+			2,手动创建
+		1,继承Model类
+		2,重写继承的$connection 属性
+		3,使用数组或者是字符串都可以
+		4,在控制器中创建模型实例, 并使用
+		5,例子
+			$user = new User();
+			dump($user);
+			dump($user->table("user")->select());
+			dump($user->all());
+
+3,基本使用
+	1,查:
+			1,使用tp提供的方法
+					$db = new Db();
+					$data = $db::table("User");
+					dump($data);
+					$data = $data->select();
+					dump($data);
+			2,使用sql语句
+					 $data = Db::query("select * from user ");
+					dump($data);
+					
+					
+					
+					
+					
+					
+					
+4,数据库的基本操作
+	1,查
+		 $user = new User();
+        $data = $user->query("select * from user");
+        $data = $user -> query ("select * from user where pass = ?",[123]);
+        //获取最近一次执行的sql语句
+        dump($user->getLastSql());
+	2,增改删
+		$user = new User();
+        //返回影响该表行数
+        $result = $user->execute("insert into user values (null,'韦肖肖','321')");
+        //? 占位符
+        $result = $user -> execute("insert into user values (null,?,?)",["王冰","1234"]);
+        //没啥区别 也是占位符
+        $result = $user -> execute("insert into user values (null,:name,:pass)",["name"=>"王江","pass"=>"12345"]);
+        dump($result);
+
+
+5,用户模块:
+	1,新建一个资源控制器 使用命令行创建
+	2, 设置资源路由
+	3,设置前台页面  提供登录
+	4,获取数据库信息并展示
+	5,增加页面添加
+	6,写入数据库并跳转至展示页面
+
+
+
+6,数据库查询操作  ./admin.php 中有查询数据库的一些操作例子
+		1,查询
+			Db::name   方法会自动给表加上表前缀    表前缀定义  database.php  'prefix' => '',
+			其他的和table方法并无区别
+		  例子:
+			$user = new User();
+			//查询所有数据
+			$data = $user->table("user")->select();
+			//dump($data);
+			dump($user->getLastSql());
+			//查询一条
+			$data1 = $user->table("user")->find();
+			dump($user->getLastSql());
+			$data2 = Db::table("user")->select();
+			dump($data2);
+			$data3 = $user->name("user")->select();
+			dump("查询name指定的表");
+			dump($data3);
+		2,条件查询
+			where()方法
+			 //双链接where方法就是进行and查询
+			$data = Db::table("user")->where("id",">","3")->where("id","<","7")->select();
+			dump(Db::table("user")->getLastSql());
+			dump($data);
+			echo "<hr />";
+			//进行模糊查询
+			$data1 = Db::table("user")->where("name","like","%丁%")->select();
+			dump(Db::table("user")->getLastSql());
+			dump($data1);
+
+
+
+
+7, 增删改操作  参考笔记中的  ./modifyTable.php
+
+
+8,事务机制
+		
+	1,事务:处理一件事情,必须同时完成 , 否则则恢复至原点
+	2,mysql事务与引擎有关  innoDb
+	3,使用:
+		1,自动控制事务
+			
+		2,手动控制事务
+
+
+
+
+
+success
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+​			

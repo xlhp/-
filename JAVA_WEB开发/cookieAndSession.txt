@@ -1,0 +1,288 @@
+## CookieAndSession
+
+[TOC]
+
+
+
+### 回顾
+
+1. servletContext 
+
+   1. 介绍
+
+      我们服务器启动的时候给每一个应用程序创建的一个ServletContext
+
+      并且这个ServletContext对象只有一个.
+
+   2. 作用
+
+      1. 获取全局参数
+      2. 获取工程下资源
+      3. 存取数据,共享数据
+
+   3. 例子
+
+      1. 怎么获取全局参数
+
+         getServletContext.getInitParams();
+
+         getServletConfig.getInitPrams()
+
+      2. 怎么后去工程下资源
+
+         getServletContext().getRealPath();
+
+         getServletContext().getReasourceAsStream()
+
+         使用类加载器获取
+
+         inputStream is = getClass().getClassLoader().getReasourceAsStream();
+
+         两种方式区别?
+
+         相对路径和绝对路径
+
+      3. 怎么存取数据
+
+         getServletContext().setAttribute();
+
+         跨Servlet存取数据
+
+         获取登录成功次数
+
+2. HttpServletRequest
+
+   1. 是什么
+
+      1. 请求对象, 用于封装客户端提交过来的信息
+
+   2. 有什么用
+
+      1. 
+
+   3. 怎么用
+
+      1. 获取头信息
+
+      2. 获取提交数据
+
+         request.getParamter("name");
+
+      3. 中文乱码
+
+         1. get
+         2. post
+
+3. HttpServletResponse
+
+   1. 这是一个响应对象,就是服务器要返回给客户端的数据,
+   2. 怎么用
+      1. 返回简单文字
+      2. 返回中文
+      3. 跳转具体界面
+         1. response.setStatus(302);
+         2. response.setHeader("location","login_success.html");
+
+
+
+### 文件下载
+
+。。。。。
+
+### 请求转发和重定向
+
+1. 请求转发:	
+
+   1. ```java
+      request.getRequestDispatcher("aim_url").forward(Requst request, Response response);
+      ```
+
+2. 重定向
+
+   1. ```java
+      //曾经使用过的旧版本重定向的方式
+      response.setStatus(302);
+      response.setHeader("location","aim_url");
+      //当前使用的重定向格式
+      response.sendRedirect("aim_url");
+      ```
+
+3. 重定向和请求转发的区别
+
+   | 请求转发                  | 重定向 |
+   | ------------------------- | :----- |
+   | 地址栏保持请求servlet位置 |     地址栏变成重定向后的位置   |
+   |  请求只有一次       |     请求有两次,第一次response携带重定向状态码和重定向地址返回浏览器,浏览器再根据地址再次请求   |
+   |  效率比重定向稍高       |  稍低于请求转发      |
+   |  只可转发给同工程下的文件     |  可跨工程,跨网站执行      |
+   |请求转发可以携带参数(还是第一次那个请求)		|	重定向不可以携带参数					|
+
+4. 实际例子去说明
+
+   去买可乐, 楼下超市没有
+
+   重定向: 老板告诉你, 哪里有可乐, 你自己去买
+
+   请求转发: 老板没有, 然后老板去给你找, 然后卖给你.
+
+
+
+### Cookie学习
+
+#### 入门学习
+
+1. 概念: 饼干, 服务器给客户端留下的一份小数据
+
+2. 应用场景
+
+   1. 自动登录
+   2. 购物车
+   3. 浏览记录
+
+3. 出现原因
+     Http协议请求本身是无状态的(无连接),所以为了服务器进行辨识客户端连接,所以设计了Cookie  主要是为了更好地交互,获取用户信息,收集用户习惯
+
+     ##### 题外话:java如何获取对象
+
+     1. new
+     2. 单例模式
+     3. 工厂模式
+
+4. Cookie的基本使用方式
+
+   1. 添加Cookie
+
+     ```java
+    response.addCookie(new Cookie(key,value));
+     ```
+   2. 获取Cookie
+    ```java
+    	Cookie[] cookies = request.getCookies();
+    ```
+   3. Cookie的其他操作
+   ```java
+   	Cookie cookie = new Cookie(key,value);
+   	//用于设置cookie最大有效时间  负数 为关闭浏览器后删除cookie  0:删除cookie , 正值表示cookie存在的时间(秒)
+   	cookie.setMaxAge(int);
+   //设置一个cookie的值
+   	cookie.setValue("String")
+   ```
+
+
+   ​		
+
+####   当堂例子: 
+
+##### 1,获取上次登录时间
+
+1. 需求: 第一次登陆时  保存登录时间 不展示登录时间
+
+   第二次登陆时 展示上次登录时间, 并保存本次登录时间替换原本的登录时间
+
+2. 基本过程
+
+   ```java
+   
+   //		获取登录账号密码假装判断一下
+   response.setContentType("text/html;charset=utf-8");
+   String username = request.getParameter("username");
+   String password = request.getParameter("password");
+   Cookie[] cookies = null;
+   		if(username.equals("admin")&&password.equals("123")) {
+   			cookies = request.getCookies();
+   			String value = OperateCookie.getCookieValue(cookies, "username");
+   			if(value == null) {
+   //				第一次登录 : 向本地写cookie
+   				String now = new Date().toString();//获取新用户登录时的时间 并写入Cookie
+   				now = new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString();//用这种方法获取的格式化的字符串无法写入cookie 原因不明
+   				now = System.currentTimeMillis()+"";//这种可以 写进去一个时间戳
+   				Cookie username1 = new Cookie("username", username);
+   				username1.setMaxAge(60*60*24*12);
+   				Cookie password1 = new Cookie("password", password);
+   				password1.setMaxAge(60*60*24*12);
+   				Cookie lastTime = new Cookie("lastTime", now);
+   				lastTime.setMaxAge(60*60*24*12);
+   				response.addCookie(username1);
+   				response.addCookie(password1);
+   				response.addCookie(lastTime);
+   			}else if(value.equals(username)) {
+   				Cookie now = OperateCookie.getCookie(cookies, "lastTime");//获取一个cookie对象
+   				response.getWriter().write(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date(Long.parseLong(now.getValue()))));//格式化输出时间
+   				now.setValue(System.currentTimeMillis()+"");//重新设置cookie内容
+   				now.setMaxAge(60*60*24*12);//必须再次进行设置该cookie的持续时间 ,否则会出现关闭浏览器就失效的问题  , 应该是对象已经不是曾经的那个了
+   				response.addCookie(now);//将cookie重新写入
+   				response.getWriter().write("<br />");
+   			}
+   		}
+   	
+   ```
+
+3. 出现的问题
+
+   1. 获取时间戳
+      1. new java.util.Date(); 获取当前时间时间戳
+      2. 格式化时间戳: new java.text.SimpleDateFormat("格式").format(时间戳);
+      3. System.currentTimeMillis(); 这个函数也可以获取一个long类型的时间戳 .
+   2. 每次获取cookie对象(cookie对象已经被替换),需要把属性重新再给他加一遍才可以写进浏览器中, 否则cookie就会变成普通的cookie
+
+   
+
+  
+
+#####  2. 获取浏览记录 
+
+  类似于上面的内容 不多做陈述
+
+- 出现的问题
+
+  1. 给特殊字符设置编码URLEncod.encod(String, String)
+
+     解除编码: URLDecod.decod(String,String);
+
+  
+
+#### cookie的安全问题
+
+​	因为cookie是放在客户端的数据, 容易泄露; 并且cookie大小受到限制, 无法完美的满足需要
+
+
+
+### Session的学习
+
+#### Session入门
+
+1. 概念: 基于cookie的会话机制, 数据存于服务器
+
+2. 常用API
+
+   ```java
+   //获取session对象
+   Session session = request.getSession();
+   //存值
+   session.setAttribute(String, String);
+   //取值
+   session.getAttribute(String);
+   //删除值
+   session.removeAttribute(String);
+   //获取Sessionid
+   String id = session.getId();
+   //删除整个会话
+   session.invalidate();
+   ```
+
+3. session创建和销毁
+
+   1. 创建: getSession方法调用
+   2. 销毁
+      1. 关闭服务器,并且session未进行持久化
+      2. 时间过长, 导致服务器删除
+   3. 关闭浏览器   并不会直接导致session销毁
+
+#### Session课堂例子
+
+
+
+
+
+
+

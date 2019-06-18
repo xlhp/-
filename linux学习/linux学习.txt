@@ -1,0 +1,396 @@
+## linux常识
+
+1. ### 服务器分区
+
+   ```
+   /boot  启动项分区  200mb
+   /swap  交换分区    2000mb
+   /       根分区    余下所有内存
+   ```
+
+2. 文件权限
+
+   ```
+   -rwx  w:4 r:2 x : 1   = 7  权限权重
+   ```
+
+3. 目录介绍
+
+   ```
+   /  
+   /bin 命令保存目录, 普通用户就可以额读取
+   /boot 启动目录, 启动相关文件
+   /dev  设备文件保存目录 
+   
+   ```
+
+4. 命令介绍
+
+   ```shell
+   mkdir dirName : 创建目录
+   rm dirName : 删除文件
+   rm -rf 目录 : 删除文件和目录
+   	-r		: 递归删除目录
+   	-f     : 强制删除目录
+   touch 文件名 : 创建文件
+   cat 文件名  : 查看文件内容
+   	-n  : 列出行号
+   more 文件名 : 分屏显示文件内容
+   head -X 文件名 : 显示前X行
+   ln  : 链接文件
+   	软连接 / 硬连接
+   	ln -s 源文件 目标文件    必须写绝对路径
+   cp
+   mv
+   ```
+
+5. 修改权限
+
+   ```shell
+   chmod:
+   	schmod u+x aa  aa文件的属主加上执行权限
+   	u/g/o   : 属主/组/其他
+   	 chmod 644 a.txt
+   ```
+
+6. 添加用户
+
+   ```
+   useradd 用户名 : 添加用户
+   passwd 用户名  : 设置密码
+   ```
+
+7. 修改文件属主
+
+   ```shell
+   chown userid filename
+   ```
+
+8. 压缩与解压缩
+
+   ```shell
+   .tar.gz
+   .tar.bz
+   .tar.bz2
+   压缩同时打包
+   		tar -zcvf  压缩文件名 源文件 
+   		-z : 识别.gz格式
+   		-c : 压缩
+   		-v : 显示压缩过程
+   		-f : 指定压缩包名
+   		-x : 解压缩
+   ```
+
+9. 重启
+
+   ```
+   重启：reboot
+   
+   平滑重启:将用户转移到另一台服务器(热备服务器), 
+   	
+   强行重启:
+   ```
+
+10. 网络命令
+
+    ```
+    ping -c 次数 ip
+    ifconfig 
+    ```
+
+11. 打开网卡
+
+    ```shell
+    1, cd /etc/sysconfig/network-scripts/
+    2,vim ifcfg-??
+    3,service network restart
+    ```
+
+12. 查看登录日志
+
+    ```
+    lastlog  : 查看最近登录时间和地点
+    日志位置 : /var/log/lastlog
+    ```
+
+13. 挂载
+
+    ```
+    mount /dev/sr0  : sr0 为光盘位
+    ```
+
+14. 安装二进制包
+
+    ```
+    rpm -ivh
+    ```
+
+15. 查询后台进程
+
+    ```
+    ps -aux ：查看后台进程
+    ps -ef  : 后台进程
+    ```
+
+
+
+
+
+
+
+
+
+
+
+### 常用命令
+
+1. mkdir dir_name 创建文件夹
+
+2. ifconfig 查看当前操作系统网络配置
+
+3. ping 
+
+4. ls 展示文件夹下面的所有文件夹和文件
+
+5. rpm -qa | grep java :查看本机上所有的软件, 并按照找出所有与java有关的东西
+
+6. rpm -e --nodeps : 用于删除软件 (--nodeps : 不检查依赖关系)
+
+7. 配置jdk环境: vim /etc/profile  在这个文件下配置环境变量
+
+   例子:
+
+   ​	JAVA_HOME = /usr/local/src/java/jdk1.8.0_201
+   ​	ClASSPATH = .:$JAVA_HOME/lib.tools.jar
+   ​	PATH = $JAVA_HOME/bin:$PATH
+   ​	export JAVA_HOME CLASSPATH PATH
+
+8. 使用 source /etc/profile 命令使得更改得以生效:一般没错的话 
+
+9. vim : 
+
+   1. a 开始插入
+   2. esc 键 弹出
+   3. :wq 写入并退出
+   4. :q! 强制退出 不保存
+
+10. firewall基本使用
+
+    1. 启动:systemctl start firewalld
+    2. 关闭: systemctl stop firewalld
+    3. 查看当前状态:systemctl status firewalld
+    4. 开机禁用:systemctl disable firewalld
+    5. 开机启用:systemctl enable firewalld
+
+11. systemctl基本使用
+
+    1. systemctl start firewalld.service : 开启一个服务器
+    2. systemctl stop firewalld.service : 关闭一个服务
+    3. systemctl restart firewalld.service:重启一个服务
+    4. systemctl status firewalld.service:查看一个服务的状态
+    5. systemctl disable firewalld.service :禁止一个服务开机自启
+    6. systemctl enable firewalld.service: 让一个服务开机自启
+    7. systemctl is-enabled firewalld.service:查看一个服务是否自启
+    8. systemctl list-unit-files|grep enabled: 当前启动的服务列表
+    9. systemctl --failed:查看启动失败的列表
+
+12. 配置firewall-cmd
+
+    1. firewall-cmd --version
+    2. firewall-cmd --help
+    3. firewall-cmd --state
+    4. firewall-cmd --zone=public --list-ports ; 查看所有打开的端口
+    5. firewall-cmd --reload : 更新防火墙规则
+    6. firewall-cmd --get-active-zones : 查看区域信息
+    7. firewall-cmd --get-zone-of-interface=eth0 : 查看指定接口的所属区域
+    8. firewall-cmd --panic-on:拒绝所有包
+    9. firewall-cmd --panci-off:取消拒绝状态
+    10. firewall-cmd --query-panic: 查看是否拒绝
+
+13. rm : 删除文件夹及其中的文件和文件夹
+
+    1. rm -f * :删除某个文件夹下的所有文件(不包括文件夹)  -f会让删除过程中不报错, 强制执行
+    2. rm -f 指定目录*:删除指定目录下所有类型的文件
+    3. rm -l 用来保证进行递归删除或者超过3个文件时 仅需要一次同意
+    4. rm -v 用来展示删除详细情况
+    5. rm -r 用来删除目录下所有的目录层
+
+14. rpm包介绍及处理
+
+    1. rpm包格式:包名,版本号,发布平台,平台
+    2. rpm -ivh rpm包 : 平台
+    3. rpm -Uvh rpm : 升级
+    4. rpm -e rpm ; 卸载
+    5. rpm -qa  包名 : 查询安装的包
+    6. rpm -q 包名 : 查询指定包是否安装
+    7. rpm -qi 包名 : 查询指定包信息
+    8. rpm -ql 包名 ; 列出包安装的文件
+    9. rpm -qf 文件绝对路径 : 查看一个文件是由哪个包安装的  
+
+15. ps 用于查看当前运行的进程
+
+    1. ps -A:显示所有程序
+    2. ps -e:和A类似
+    3. ps -f:显示UID , PPIP c和stime栏位
+
+### 实例
+
+#### linux开放端口
+
+1. 查询以开放端口 netstat -anp
+
+2. 查看指定端口是否打开: firewall-cmd --query-port=port/tcp
+
+   Authorization failed.
+       Make sure polkit agent is running or run the application as superuser.
+
+   问题解决: 使用root用户进行处理
+
+3. 查看端口是否已经开放
+
+4. 不开放:
+
+   1. firewall-cmd --zone=public --add-port=port/tcp --permanent
+   2. 重新载入:firewall-cmd --reload
+   3. 查看是否修改成功:firewall-cmd --zone=public --query-port=port/tcp
+   4. 如果开放错误 进行删除处理:fire-cmd --zone=public --remove-port=port/tcp --permanent
+
+5. 然后就ok了  就可以测试连接了
+
+#### linux初始使用数据库
+
+1. 免密登录:vim /etc/my.cnf 文件中添加skip-grant-tables
+2. authentication_string = password('')
+
+#### 放开root用户远程链接
+
+一般情况下 禁止root用户远程登录
+
+如何放开权限远程登录root用户:
+
+1. grant all privileges on * .* to 'root'@'%' identified by 'password';
+2. flush privlieges  
+3. 解释: 第一句:用来修改 root登录的ip地址和可访问数据库  
+4. grant all privileges on 库名.表名 to '用户名'@'ip地址' identified by '密码' with grant options
+5. flush privlideges //刷新数据库
+
+#### 安装GCC
+
+yum install gcc-c++
+
+
+
+#### redis学习
+
+##### NO_Sql概念及分类
+
+###### noSQL
+
+​	概念:not only sql: 用于应对高并发 , 海量读写 , 易扩展
+
+1. 键值对:redis: key_value  易缓存
+2. 列式存储:Hbase   易扩展
+3. 文档型数据库: mongoDB
+4. 图形数据库
+
+###### redis概念 
+
+​	由C语言实现的直接操作内存的开源的高性能的数据库软件
+
+###### redis应用场景:
+
+1. 缓存:数据查询,短链接, 新闻内容, 商品内容...(最多使用)
+2. 聊天室的在线好友列表
+3. 任务队列(秒杀, 抢购, 12306)
+4. 应用排行榜
+5. 网站访问统计
+
+###### redis环境搭建
+
+1. 安装包:源码形式提供, .c文件
+2. 需要手动将.c编译为.o文件  -->需要安装gcc 
+3. 编译后的文件安装到linux系统上
+4. 下载redis压缩包, 
+5. 在解压的路径下 make 编译
+6. 然后安装 :  make PREFIX=路径  install
+7. 复制解压redis文件夹中的 redis.conf 文件 至安装路径
+8. 后端启动  vim redis.conf    修改daemonize 为yes
+9. 到redis安装目录下 ,启动redis    : ./bin/redis-server   ./redis.conf
+10. redis默认端口 6379  开放端口
+11. 启动客户端 ,连接已启动redis服务
+12. redis安装目录下  ./bin/redis-cli    连接服务
+
+###### redis 五种数据类型
+
+string list hash set sorted-set
+
+功能: 添加 删除,获取,查看多少元素,判断元素是否在集合中,
+
+key的通用操作
+
+jedis:java操作redis
+
+###### redis常识:
+
+1. 一个redis支持16个仓库
+
+###### redis常用命令:
+
+1. keys : 展示当前所有的键
+2. 默认在0号仓库
+3. 切换仓库  select   0-15
+4. move  key  1   :将数据移动 到几号仓库
+5. echo  : 打印东西
+6. quit  : 退出链接
+7. dbsize: 显示当前数据库的key数量
+8. info : 获取服务器的信息和统计
+9. flushdb：删除当前选择数据库中所有的key
+10. flushall : 删除所有数据库中所有的key
+
+###### 一个小案例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+linux 
+Centos 7 开放防火墙:
+	//添加开放端口
+	Firewall-cmd --zone=public --add-port=80/tp --permanent
+	//含义
+	--zone : 开放作用域
+	--add-port=80/tcp  :  添加端口,格式为:端口/通讯协议
+	--permanent : 永久有效
+	//重启防火墙
+	systemctl restart firewalld.service
+	//关闭防火墙
+	systemctl stop firewalld .service
+	//查看监听端口
+	netstat -lntp
+	//查看某个端口被某个进程占用
+	netstat -lnp|grep 8080
+	
+
+	RDP远程桌面协议
+	SSH
+	FTP
+	POP
+	TELNET  

@@ -1,0 +1,32 @@
+3,js插件
+	1,模态框(弹窗)
+		.modal
+		.modal-dialog
+		.modal-lg
+		.modal-sm
+		.modal-content
+		.modal-header
+		.modal-body
+		.modal-body
+		.modal-footer
+		.fade
+	2,下拉菜单
+	3,滚动监听
+		
+	4,标签栏
+		.nav 
+		.nav-tabs
+		data-toggle="tab"
+		设置锚点
+		.tab-content
+		.tab-pane
+		.fade
+		.in
+	5,工具提示
+	6,弹出框
+	7,警告框
+	8,按钮
+	9,折叠效果
+	
+	10,幻灯片
+	11,固定侧边栏

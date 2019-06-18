@@ -1,0 +1,184 @@
+#  JSP学习
+
+[TOC]
+
+
+
+### 基本标签
+
+#### JSP基础
+
+##### jsp基本标签
+
+1. page 
+
+   1. ```jsp
+      <%@ page language="java" ContentType="text/html;charset=utf-8"
+          pageEncoding="UTF-8"
+          %>
+      ```
+
+   2. contentType 
+
+      1. text/html : mime-type
+
+   3. pageEncoding : jsp 的编码
+
+   4. extends: 继承谁 
+
+   5. import : 导包用的
+
+   6. session : true or false  设置本页面是否可以使用session
+
+   7. isErrorPage: 是否为错误处理页面
+
+   8. errorPage:错误处理页面
+
+2. include:静态包含
+
+   1. ```jsp
+      <%@ include file="" %>
+      ```
+
+      
+
+   2. 作用:包含另一个jsp页面
+
+   3. file 指定包含文件路径
+
+3. taglib : 引入标签库
+
+   1. ```jsp
+      <%@ taglib prefix="" uri="" %>
+      ```
+
+      1. uri :标签库路径
+      2. prefix:标签库别名
+
+##### jsp动作标签
+
+1. jsp:forward:请求转发
+   1. 等同于request.getRequestDisp
+2. jsp:param:
+   1. 包含某个页面或者带某个参数
+3. jsp:include:动态包含
+   1. 作用:包含一个jsp页面
+   2. 原理:将指定页面先进行编译, 然后输出值目标文件
+
+##### JSP内置对象
+
+###### 内置对象
+
+1. request
+   1. HttpServletRequest
+2. session
+   1. HttpSession
+3. pageContext
+   1. PageContext
+4. application
+   1. ServletContext
+5. response
+   1. HttpServletResponse
+   2. response.getWriter().writer(""); 这种打印方法会使出现在整个页面最开始, 因为Servlet的out输出最后都是写到response的输出缓存空间内的.
+6. out : 
+   1. Jspwriter
+   2. out.writer("");
+7. page
+   1. Object
+8. exception
+   1. Throwable
+9. config
+   1. ServletConfig
+
+###### 作用域
+
+request,,session,, pageContext,,application
+
+在作用域中都可以存值取值, 有范围约束
+
+pageContext [PageContext]: 仅限于当前页面
+
+request [HttpServletRequest]: 仅限于一次请求
+
+session [HttpSession]: 仅限于一整次会话
+
+application [ServletContext]: 整个工程访问
+
+EL表达式
+
+1. 基本使用:在作用域中取值
+
+   ```jsp
+   <%-- 在空间中取值 --%>
+   <%
+   	request.setAttribute("address","黑龙江科技大学");
+   %>
+   ${ requsetScope.address}
+   <%-- 在空间中取数组等有下标的 --%>
+   <%
+   	String[] arr = {"11","22","33"};
+   	request.setAttribute("array","arr");
+   %>
+   ${ requestScope.arr[0]},${ requestScope.arr[1]}
+   <%-- 在空间中取map集合 --%>
+   <%
+   	Map map = new HashMap();
+   	map.put("name","ddd");
+   	map.put("age","12");
+   	request.setAttribute("map",map);
+   %>
+   ${requestScope.map.name}
+   ```
+
+   
+
+2. 其他作用
+
+   1. 判断一个对象是否为空  ${empty array}
+   2. 进行运算
+   3. 三元 表达式等等其他很多东西
+
+3. 内置对象(11个)
+
+   1. pageContext
+   2. requestScope
+   3. pageScope
+   4. sessionScope
+   5. applicationScope
+   6. param
+   7. params
+   8. cookie
+   9. header
+   10. headerValues
+   11. initParam
+
+### JSTL表达式
+
+1. 概念
+
+2. 引入<%@ taglib profix="" uri="http://java.sun.com/jsp/jstl/core" %>
+
+   并将包引入lib中
+
+3. 常用元素
+
+   1. jstl:forward
+   2. jstl:set
+   3. jstl:if
+
+
+
+### jsp开发模式
+
+#### javaBean+jsp
+
+1. 特点 : jsp里面直接写java代码
+2. 缺点:维护困难,jsp页面代码变得臃肿
+
+#### Servlet+javaBean+jsp : MVC模式java实现最基础的存在
+
+1. mVC模式简介
+   1. Model : 模型层  类似于JavaBean
+   2. View ; jsp
+   3. Controller : 控制层, 接收页面请求, 发送给Service层
+2. 优缺点 ; 适合大项目 , 不适合小项目

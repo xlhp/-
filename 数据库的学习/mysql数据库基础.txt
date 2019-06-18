@@ -1,0 +1,453 @@
+# MYSQL数据库学习
+
+
+
+数据库: 1,数据库是按照数据结构来组织, 			存储和管理数据的建立在计算机存储设备上的仓库
+2,数据库是长期存储在计算机中,有组织,可共享的数据集合,数据库中的数据集合值得是以一定的数据模型组织,描述和存储在一起,具有尽可能小的冗余度,较高的数据独立性和易扩展性的特点并可以在一定范围内为多个用户共享
+
+3,MYsql数据库服务器
+	mysql数据库:数据库管理软件
+	服务器:一台电脑
+	
+	
+	
+4,mysql删除:
+	安装位置:C:/ProgramFiles/mysql
+	除了卸载和删除文件夹外 , 还需要将系统盘下ProgramData/Mysql   该文件夹下存储着所有的数据库数据
+
+## 数据库的操作
+
+[TOC]
+
+### 1,DDL  数据定义语言
+
+​	1,通过命令行登录mysql: mysql -uroot -proot     --当然我一点也不懂
+
+#### 1,创建数据库
+
+```mysql DML: 数据操作语言 insert ....
+create database databaseName;
+create database date;
+--创建是数据库指定字符集
+create dadtabase databaseName character set 字符集;
+--创建数据库指定校对规则
+create database databaseName character set utf8 collate 校对规则;
+```
+
+ 	mysql中默认存在的库: 以下数据库尽量不要去动
+
+​					information_schema
+
+​					performance_schema
+
+​					mysql
+
+####  2,查看及修改数据库的操作
+
+```mysql
+--展示所有数据库
+show databases;
+--查看创建数据库时使用的语句
+show create database databaseName;
+--修改数据库操作
+--修改数据库字符集
+alter database databaseName character set character_encoding;
+--删除数据库
+drop database databaseName;
+```
+
+####  3,其他数据库操作命令
+
+```mysql
+--切换数据库
+use DatabaseName;
+--查看当前使用的数据库
+select database();
+```
+
+#### 4,创建表
+
+```sql
+--创建数据库
+create database databaseName
+--创建数据表
+create table tableName(row  type(len) constraint);
+--unique 唯一约束
+--not null 非空约束
+--auto_increment 自增涨
+```
+
+#### 5,列的约束
+
+主键约束:primary key
+
+唯一约束:unique
+
+非空约束:not null
+
+```sql
+--设计表
+--实体:学生,学生姓名,id,性别,年龄
+create table student(sid int primary key,
+                    sname varchar(21),
+                    sex int,
+                    age int 
+                    );
+
+```
+
+#### 6,查看修改删除表
+
+```sql
+--查看所有的表
+show tables;
+--查看表的定义
+show create table tableName;
+--查看表结构
+desc tableName;
+--修改表结构
+--alter table tablename add/modify/change/drop rowName
+--add row
+alter table tableName add rowName rowType rowConstraint;
+--modify row_attribute
+alter table tableName modify row rowType rowConstraint;
+--change row_name
+alter table tableName change oldRowName newRowName rowType rowConstraint;
+--del a column of a table
+alter table tableName drop rowName;
+--rename table
+rename table oldTableName to newTalbeName;
+--modify character encoding of the table
+alter table tableName character set gbk;
+--delete table
+drop table tableName;
+```
+
+#### 7,附加:mysql中内置时间类型
+
+| 数据类型  | 年份和时间        |
+| --------- | :---------------- |
+| DATE      | 年-月-日          |
+| TIMESTAMP | 不知道怎说        |
+| TIME      | 小时-分钟-秒      |
+| YEAR      | 年份              |
+| DATETIME  | 年-月-日 时-分-秒 |
+
+
+
+### 2,DML数据操作语言&DQL:数据查询语言
+
+#### 1,插入数据
+
+```sql
+--第一种写法
+insert into tableName(column1,column2,column3) values(value1,value2,value3);
+--第二种稍微简单的写法  改写法需要将值与键一一对应,不然无法插入
+insert into tableName values(value1,value2,value3);
+--批量插入
+insert into student values(value1,value2,value3),(value1,value2,value3),
+(value1,value2,value3),
+(value1,value2,value3),
+(value1,value2,value3);
+```
+
+
+
+IDUS
+
+#### 2,删除数据
+
+```mysql
+--删除数据
+delete from student where ....;
+delete from student ; --删除所有数据;
+--truncate 与 delete 的区别
+--关于两者效率: 数据量小 delete效率高, 如果数据多truncate 效率高
+--truncate 处理过程 删除表,并重建表 DDL语句(数据库定义语句)
+truncate table students;
+```
+
+#### 3,修改数据
+
+```mysql
+--update tableName set columnName = columnValue , columnName = columnValue where ...
+update student set sname = '丁兆顺' where sid = 003; 
+```
+
+####   4,查询数据
+
+```mysql
+--select [distinct] [*] [列名,列名2] from tableName [where ...]
+--distinct : 去除重复的数据
+--1,分类id,分类名称,分类描述
+create table category(
+	id int primary key auto_increment,
+    name varchar(20),
+    cdesc varchar(50)
+);
+insert into category values
+(null,'手机数码','电子产品,来自华强北'),
+(null,'鞋靴皮箱','江南皮革厂制造,坚实耐用'),
+(null,'香烟酒水','黑啤泰山,值得拥有'),
+(null,'酸奶饼干面包','好吃当饱'),
+(null,'馋嘴零食','花生瓜子八宝粥');
+
+--所有商品
+--1,商品id,商品名称,商品价格,商品生产日期,商品分类id
+create table product(
+	pid int primary key auto_increment,
+    pname varchar(20),
+    price double,
+    pdate timestamp,
+    cid int
+);
+
+insert into product values(null,'小米4',998,null,1),
+(null,'华为mate30',30000,null,1),
+(null,'阿迪王',99,null,2),
+(null,'茅台',1000,null,3),
+(null,'青岛啤酒',12,null,3),
+(null,'娃哈哈',30,null,4),
+(null,'小熊饼干',1,null,4),
+(null,'卫龙',1,null,5),
+(null,'旺旺饼干',1,null,5);
+
+--查询所有商品
+select * from product;
+--查询商品名称和商品价格
+select pname,price from product;
+--别名查询 as 可省略
+select p.pname,p.price from product as p;
+	--列别名
+	select p.pname as 商品名称,p.price as 商品价格 from product as p;
+--去重复
+select distinct cid from product; 
+--select运算查询  + - * /
+select pname 商品名称,price 原价,price*1.5 优惠价格 from product;
+--where 条件查询 > >= < <= != <>
+--查询商品价格不等于88的商品
+select * from product where price <> 88;
+
+--逻辑运算 or and not
+--查询商品价格在10-100之间的商品
+select * from product where price >10 and price <100;
+select * from product where price between 10 and 100; 
+--查询商品价格小于100,或者商品价格大于900
+select * from product where price <100 or price >900;
+-- like : 模糊查询 _  : 表示一个字符   %  : 多个字符
+--查找名字中带有饼 的商品
+select * from product where pname like '%饼%';
+--查找第二个字是'熊'的商品
+select * from product where pname like '_熊%';
+--in 在某一个范围内获取值
+select * from product where cid in (1,2,3);
+--排序 order by  asc ascend 升序  desc descend 降序
+select * from product order by price;
+--名称中存在"饼"字 并按照降序排序
+select * from product where pname like '%饼%' order by price desc;
+--查询商品中酒水的价格总和
+select sum(price) from product where cid = 3;
+--查询商品中各种类型的价格总和
+select cid 类型, sum(price) 价格 from product group by cid order by sum(price) desc;
+--avg count  where后面不可接聚合函数
+
+--获取大于平均价格的商品信息
+select * from product where price > (select avg(price) from product);
+--按照cid分组, 并且获取每组的平均价格, 然后取出平均价格大于60的组
+select cid , avg(price) from product group by cid having avg(price) > 60; 
+
+
+--ifnull() 函数
+ifnull(x,x2)  如果为空则返回第二个  如果不为空则返回第一个
+```
+
+  
+
+[^]: 注意select执行顺序: from .... where  group by ....having.....select .. order
+
+
+
+#### 5,多表相关操作
+
+##### 1,外键约束:用于维护多表的关系 foreign key
+
+```mysql
+--给表中添加外键约束
+alter table product add foreign key(cid) references category(id);
+--如果被依赖表被删除,需要先删除所有依赖数据.然后才可以处理
+```
+
+##### 2,多表的建表原则
+
+​	一对多:商品和分类
+
+​		建表原则:在多的一方添加外键约束,指向一的一方
+
+​	多对多:老师和学生,学生和课程
+
+​		建表原则:多建一张中间表,将多对多的关系, 拆解成一对多的关系,中间表至少有两个外键,两			  						    	个外键分别指向原来的那张表
+
+​	一对一:公民和身份证
+
+​		建表原则:将一对一的情况按照一对多处理,在任意一张表里面添加一个外键,并且这个外键唯一指向另一张表, 或者直接将两张表合并成一张, 或者让两张表的主键相等.
+
+##### 3,建库原则
+
+​	通常情况下  一个应用一个库
+
+#### 4,网上商城的建表练习
+
+```mysql
+--用户名
+create table user(
+	uid int primary key auto_increment,
+    username varchar(32),
+    password varchar(31),
+    phone varchar(13)
+);
+insert into user values(null,'丁招数','123','18846453285');
+--订单表
+create table orders(
+	oid int primary key auto_increment,
+    sum int,
+    otime timestamp,
+    address varchar(100),
+    uno int,
+    foreign key(uno) references user(uid)
+);
+insert into orders values(null,200,null,'黑龙江科技大学',1);
+insert into orders values(null,1200,null,'山东省聊城市',1);
+```
+
+- 商品表
+
+  ```mysql
+  create table product(
+  	pid int primary key auto_increment,
+  	pname varchar(10),
+  	price double,
+      cno int,
+  	foreign key(cno) references category(cid)
+  );
+  insert into product values(null,'小米4',998,1),
+  (null,'华为mate30',30000,1),
+  (null,'阿迪王',99,2),
+  (null,'茅台',1000,3),
+  (null,'青岛啤酒',12,3),
+  (null,'娃哈哈',30,4),
+  (null,'小熊饼干',1,4),
+  (null,'卫龙',1,5),
+  (null,'旺旺饼干',1,5);
+  
+  ```
+
+- 商品分类表
+
+  ```mysql
+  create table category(
+  	cid int primary key auto_increment,
+  	cname varchar(15),
+  	cdesc varchar(100)
+  );
+  ```
+
+- 订单项
+
+  ```mysql
+  create table orderitem(
+  	ono int,
+  	pno int,
+  	foreign key(ono) references orders(oid),
+  	foreign key(pno) references product(pid),
+  	ocount int,
+  	sumprice double
+  );
+  insert into orderitem values(1,7,100,100);
+  insert into orderitem values(1, 7,100,100);
+  insert into orderitem values(2,5,1,35);
+  insert into orderitem values(2,3,3,99);
+  
+  ```
+
+- 总结:多表之间的关系如何维护 :使用外键 foreign key
+
+  ​	添加外键:alter table tableName add foreign key(rowName) references 		category(otherRowName);
+
+  
+
+  ​		唯一约束:必须唯一 , 可以为空
+
+  ​		主键约束:不能为空, 唯一
+
+  ​		关于外键 : 外键必须是另一张表的主键, 所以 唯一约束不可以做外键
+
+#### 5,多表交叉查询
+
+- 交叉连接查询
+
+  ```mysql
+  select * from table1,table2 -- 获取笛卡尔积
+  select product.cname,product.cdesc,category.pname,category.price from product,category where product.con = category.cid;--隐式内连接
+  --显示内连接
+  select * from product p inner join category c on p.con = c.cid;
+  
+  ```
+
+   隐式内连接 : 查询结果后通过where区分
+
+   显示内连接 : 带着条件去查询 , 执行效率高一些
+
+- 左右外连接
+
+  ```mysql
+  --左外链接
+  select * from product p left outer join category c on p.con = c.cid;
+  --右外连接
+  select * from product p right outer join category c on p.con = c.cid;
+  ```
+
+  
+
+#### 6,分页查询(limit)
+
+- 每页10个数据  索引从0开始 
+
+  ```mysql
+  select * from product limit 0 , 10;
+  ```
+
+  
+
+#### 7,子查询
+
+- 概念 sql语句里面嵌套sql语句;
+
+- 练习
+
+  ```mysql
+  --查询分类名称为手机数码的所有商品
+  select * from product where cno = (select cid from category where cname = '手机数码');
+  --查询出商品名称,商品分类名称信息
+  select product.pname,category.name from product,category where product.cno = category.cid;
+  select pname,(select cname from category where product.cno == cid) from product; 
+  
+  ```
+
+  
+
+单行子查询 
+
+多行子查询
+
+多列子查询
+
+select 后面加子查询
+
+form后面加子查询
+
+where后面加子查询
+
+
+
+
+

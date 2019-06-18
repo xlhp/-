@@ -1,0 +1,57 @@
+## 1,反射基本知识
+
+1. java.lang.reflect 包下面
+
+### 2,反射基本使用
+
+1. 获取类对象  三种基本方式获取类对象
+
+   ```java
+   //通过类名获取对象
+   		Class<Person> clazz = Person.class;
+           try {
+               Method personGetName = clazz.getMethod("getName");
+               out.println(personGetName.invoke(clazz.newInstance()));
+           } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+               e.printStackTrace();
+           }
+           out.println("---------");
+           // 通过Class.forName() 获取类对象
+           try {
+               Class clazz2 = Class.forName("xyz.xlhp.reflectBasic.Person");
+               String name = clazz2.getName();
+               out.println(name);
+   
+           } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+           }
+           out.println("---------------");
+           try {
+   
+               Class clazz3 = new Person().getClass();
+               out.println(clazz3);
+           } finally {
+   
+           }
+   ```
+
+2. 通过类对象, 调用本类方法
+
+   ```java
+    		Class clazz = Person.class;
+           try {
+               //通过类对象获取一个类实例
+               Person person = (Person) clazz.newInstance();
+   //            获取类对象下的方法对象
+               Method personSetName = clazz.getMethod("setName", String.class);
+               Method personGetName = clazz.getMethod("getName");
+   //            执行方法
+               personSetName.invoke(person,"ding");
+               personGetName.invoke(person);
+               out.println(person.getName());
+           } catch (NoSuchMethodException|IllegalAccessException|InstantiationException| InvocationTargetException e) {
+               e.printStackTrace();
+           }
+   ```
+
+   

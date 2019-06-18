@@ -1,0 +1,9 @@
+# IO流学习
+
+## io基础学习
+
+1. 字符流:reader, writer(通常用于文字文本)
+2. 字节流:inputStream , outputStream (图片,音频,视频)
+3. 衍生类:功能名+基本流名
+
+例子: 视频操作  使用字节流 ----> File+inputStream

@@ -1,0 +1,125 @@
+视图
+1,如何加载页面
+	view 等等.....
+	 //调用fetch方法
+		return $this->fetch();
+        //使用助手函数
+		return view();
+        //使用view()类
+        $view = new View();
+        return $view->fetch();
+	具体参考前面的笔记
+	fetch()
+	:参数1:模板的渲染
+	参数2:模板赋值
+	参数3:模板替换
+2,模板赋值  就是给页面传值
+		$name="山东";
+        $add = "山东省聊城市";
+        //使用assign   可以传数组
+        $this->assign("name",$name);
+        //通过fetch方法进行传递
+        //此方法也映射其他返回页面方法的使用
+        $view = $this->view;
+        $view->age="123";
+        return $this->fetch("",["add"=>$add,"name"=>"河南"]);
+3,模板替换
+	1,配置文件更改
+	config.php中   'view_replace_str'       => [],
+	更改配置文件是全局替换
+	2,部分替换
+	fetch("",[],['__homes__'=>"/static/home/public]);
+	通过设置fetch的第三个参数进行设置
+	view()函数及其他类似函数都可以使用
+4,模板的渲染
+	默认加载的是当前模块,当前控制器下的,默认方法的页面
+	fetch("某个页面",[],[])
+	写路径  写错了自己调
+5,模板:页面中如何展示内容
+	1,普通标签
+		1,普通标签
+		// 模板引擎普通标签开始标记
+        'tpl_begin'    => '{',
+        // 模板引擎普通标签结束标记
+        'tpl_end'      => '}',
+	2,标签库标签
+        // 标签库标签开始标记
+        'taglib_begin' => '{',
+        // 标签库标签结束标记
+        'taglib_end'   => '}',
+	通过修改config.php中的配置 修改读取的标签库
+		
+	
+	3,使用函数
+		{$time|date="Y:m:d h:i:s",###|md5}
+		{:md5(date("Y:m:d h:i:s",$time))}
+	4,设置默认值
+		 {$name|default="丁兆顺"}
+	5,三元运算符
+		 {$status?"满足":"不满足"}
+        <!--<?php echo !empty($status)?"满足":"不满足"; ?>-->
+	6,运算
+		<h2>{$a+$b}={$a}+{$b}</h2>
+	7,原样输出
+		literal 拒绝解析
+		{literal}
+            <h2>hello {$a}</h2>
+        {/literal}
+6,系统变量
+	$Think 开头
+	
+	<h3>{$_GET["id"]}</h3>
+    <h3>{$Think.get.id}</h3>
+	
+	<h3>{$_SERVER["HTTP_HOST"]}</h3>
+	查看域名
+    <h3>{$Think.server.http_host}</h3>
+	//<h3><?php echo $_SERVER["HTTP_HOST"]; ?></h3>
+    //<h3><?php echo \think\Request::instance()->server('http_host'); ?></h3>
+	
+7,系统常量
+	通过手册进行参考  附录里面的常量
+	<h3>{$Think.ROOT_PATH}</h3>
+    <h3>{$Think.const.APP_PATH}</h3>
+8,配置文件输出
+	
+	<h3>{$Think.config.default_lang}</h3>
+	
+9,请求参数
+	直接使用request对象
+10,模板注释
+	/**/和//
+11,包含文件 页面包含关系
+	{include file="路径"}
+	也可以包含多个
+	{include file="路径,路径"}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

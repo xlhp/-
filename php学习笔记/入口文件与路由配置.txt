@@ -1,0 +1,206 @@
+
+
+
+
+
+
+
+
+
+
+
+
+路由:Route::rule("路由表达式","路由地址","请求类型","路由参数(数组),"变量规则(数组)"")
+1,路由作用:
+		1, 简化地址
+		2,有利于爬虫的官网(有利于搜索引擎优化)
+2,入口文件
+		1,前后台分离
+			a,在网站public目录下 新建admin.php文件作为php
+			b,
+			
+
+		2,绑定功能
+			1,实现功能 : index只可以进前台 
+						 admin只可以进后台 建议后台入口文件
+			2,实现方式
+					//定义常量 绑定后台
+					define('BIND_MODULE','admin');
+			3,url地址改变
+3,隐藏入口文件
+		1,开启阿帕奇的重写  配置文件中http.conf文件中:  LoadModule rewrite_module modules/mod_rewrite.so
+		2,设置访问权限
+			 AllowOverride All
+		3,入口文件 在 public目录下新建一个.htaccess
+			<IfModule mod_rewrite.c>
+			  Options +FollowSymlinks -Multiviews
+			  RewriteEngine On
+
+			  RewriteCond %{REQUEST_FILENAME} !-d
+			  RewriteCond %{REQUEST_FILENAME} !-f
+			  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+			</IfModule>
+			如果上面的不好使 请使用下面的
+			<IfModule mod_rewrite.c>
+			  Options +FollowSymlinks -Multiviews
+			  RewriteEngine On
+	
+			  RewriteCond %{REQUEST_FILENAME} !-d
+			  RewriteCond %{REQUEST_FILENAME} !-f
+			  RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]
+			</IfModule>
+		4,重启服务
+		5,url地址变化 : 隐藏之前
+				必须写入口文件
+			隐藏后可以不写
+4,tp路由学习注意
+	1,支持三种方式的url解析规则
+	2,路由只针对应用,不针对模块,因此路由的设置也是可以针对应用下的所有模块
+	3,如果有些模块不想使用路由, 则可以关闭  
+				例如:关闭admin模块的路由   在后台入口文件加载框架后关闭路由写下面的一句话
+					\think\App::route(false)
+
+
+5,三种路由模式
+	1,普通模式
+			:关闭路由,完全使用path_info方式的url
+			设置: 
+					 // 是否开启路由
+						'url_route_on'           => true,
+					//是否强制使用路由
+						'url_route_must' => false
+	2,混合模式
+			:开启路由,并使用路由定义+默认path_info方式的混合
+			
+			开启路由,并不强制使用路由
+	3,强制模式
+			:必须使用  将配置文件中的强制使用路由打开
+	4,路由的形式
+		1,静态地址路由
+				Route::rule("访问点","路径");
+		2,给路由带参数
+			这种定义方式如果出现参数不够会报错
+			public function course(){
+				echo input("id");
+			}
+			public function course(){
+				echo input("year")." ".input("month");
+			}
+			Route::rule('course/:id',"index/Index/course");
+			Route::rule("time/:year/:month","index/Index/time");
+		3,可选参数路由
+			上面的控制器方法不用变  变得是路由路径
+			中括号中的参数都是可以选择的
+			Route::rule("course/[:id]","index/Index/course");
+		4,全动态路由
+			一般不建议使用
+			//全动态参数路由
+			public function dynamicRoute(){
+				echo input("a");
+			}
+			Route::rule(":a/:b","index/Index/dynamicRoute");
+		5,完全匹配路由
+			重点是$符号   其他路由在后面添加东西可以访问到 , 完全匹配路由不可以  添加参数后会报错
+				    Route::rule("maximumLikelihood$","index/index/maximumLikelihood");
+		6,带额外参数
+				Route::rule("extraParam","index/index/extraParam?id=10&age=20");
+	5,设置请求方式
+			1,Route::rule方法默认支持所有请求
+			2,设置请求方式
+				//设置获取参数的方式
+				//设置get请求
+				Route::rule("method","index/index/method","get");
+				Route::get("method","index/index/method");
+				//设置post请求
+				Route::post("method","index/index/method");
+				Route::rule("method","index/index/method","post");
+				//支持所有方法
+				Route::rule("method","index/index/method","get|post");
+				Route::any("method","index/index/method");
+			其他方法都类似
+			只是put/delete  中 method中都是用post方法
+
+6,动态批量设置路由
+	1,基本格式:Route::rule(
+		[
+			"路由规则"=> "路径",
+			"路由规则2" =>"路径"
+		
+		]
+	,"请求类型","匹配参数(数组)","变量规则");
+	2,
+	Route::rule(
+	    [
+	        "betchRoute"=>"index/index/betchRoute",
+	        "betchRoute/:id"=>"index/index/betchRoute"
+	    ]
+	);
+7,文件注册路由
+	配置文件中直接设置路由规则
+	return [
+        "fileRoute" => "index/index/fileRoute",
+        "fileRoute2/:id" => "index/index/fileRoute"
+    ];
+
+
+8,变量规则
+	//设置路由参数匹配规则(变量规则)
+    Route::rule("argu/:id","index/index/argu","get",[],['id' => '\d+']);
+9,路由参数
+	路由参数主要是指可以设置一些路由匹配的条件参数,主要用于验证当前的路由规则是否有效  具体细节请参考手册
+	    Route::rule("routeargu","index/index/routeArgu","get",["method" => "get"]);
+10,资源路由
+	1,后台功能
+		add页面,展示页面,删除功能,修改页面,修改功能,增加功能
+	2,
+	//资源路由声明
+    Route::resource("blog","index/Blog");
+	具体参照手册
+11,快捷路由
+	Route::controller("blogCon","index/blog");//参照手册
+	//快捷路由使用
+    public function getIndex(){
+        echo "快捷路由基本引入方法";
+    }
+    public function getName(){
+        echo "blog的快捷路由访问方法";
+    }
+	访问: www.tp.com/blogCon/index
+	结果:快捷路由基本引入方法
+12,生成url地址
+	按照程序员的想法来生成一个链接  当有路由时 生成路由规则, 如果没有 则生成一个地址
+	找寻某个页面的地址
+	url函数
+	URL类build方法
+	添加入口文件
+	Url::root("/index.php");
+	例如
+	        echo Url::build("index/index/index@blog",["id"=>"01","name"=>"丁兆顺"],"","www.baidu.com");
+
+
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	

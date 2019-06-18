@@ -1,0 +1,153 @@
+#  Listener&&Filter
+
+[TOC]
+
+
+
+## listener: 监听器
+
+#### 作用:
+
+1. 监听某一事件的发生, 状态的改变
+
+#### 接口回调:
+
+1. 监听器实现方式就是接口回调
+2. 需求: 当a遇到某种状态时, 通知b
+3. 概念: 事先先把对象传递给A , 当执行到目标状态时, 通过对象,来调用b的方法, 但是 不是传递b的实例, 而是传递一个接口的实例
+4. 目的: 为了提高项目的可扩展性, 接口可以传递多个实现类  只要更改传参人, 就可以让状态更改, : 参考策略设计模式
+
+#### Listener类型(8个3种)
+
+1. 监听三个作用域的建立和销毁
+
+   1. ServletRequestListener
+
+   2. HttpSessionListener
+
+      作用 :  统计在线人数; 
+
+   3. ServletContextListener : 
+
+      作用: 在项目初始化的时候, 加载自身需要提前加载的东西
+
+      ​	并且执行自定义任务调度,执行某一任务
+
+2. 监听三个作用域的属性状态变更   
+
+   1. 作用: 监听作用域中值得添加,替换,移除的动作
+   2. request -- > ServletRequestAttributeListener
+   3. session --> HttpSessionAttributeListener
+   4. servletContext -- > ServletContextAttributeListener
+   5. 说明: 没有第一类作用大
+
+3. 监听httpSession存值的状态变更
+
+   1. HttpSessionActivationListener : 不需要注册
+
+      1. 作用: 用于监听session的值时钝化还是活化的动作
+
+         将实现该接口的Bean进行钝化/活化时调用
+
+      2. 钝化: 序列化 passvate 
+
+      3. 活化: 反序列化  activate
+
+      4. 活化是在Session中钝化中取值才会进行活化
+
+      5. 钝化/活化的意义: 为了缓解内存压力
+
+      6. 也可通过其他方式让session进行钝化
+
+         1. tomcat中conf/context.xml中设置
+
+            1. 特点 : 对所有运行在服务器的项目生效
+
+         2. 或者: conf/Catalina/localhost/context.xml中配置
+
+            1. 特点:对所有在本域名下的项目生效
+
+         3. 在web工程中META-INF中创建context.xml配置
+
+            1. 特点 : 对本项目生效
+            2. maxIdleSwap: 多长时间后会钝化: 分钟
+            3. directory : 钝化后文件存放位置
+
+            <Context>
+
+            ​	<Manager className="org.apache.catalina.session.PersistentManager" maxIdleSswap="1">
+
+            ​		<Store className="org.apache.catalina.session.FileSstore" directory="it315" />
+
+            ​	</Manager>
+
+            </Context>
+
+   2. HttpSessionBindingListener : 不需要注册
+
+      1. valueUnbound() : 值解除绑定 : javaBean实例从Session中删除
+      2. valueBound()  :  值绑定 :  javaBean实例添加到Session中
+
+4. 监听的三个作用域
+
+   1. pageContext  (没有监听器)
+   2. httpServletRequest  ---request   -----> ServletRequestListener
+   3. HttpSession  ---Session   ------->  HttpSessionListener
+   4. ServletContext --- application   -----> ServletContextListener
+
+5. 使用流程
+
+   1. 定义一个类, 实现某一个接口
+
+   2. 注册监听器
+
+      web.xml中
+
+      <listener>	
+
+      ​	<listener-class>路径</listener-class>
+
+      </listener>
+
+## Filter  过滤器
+
+### 基础知识
+
+1. 作用 : 对的客户端的请求进行过滤, 起到拦截处理&对请求进行统一预处理
+   1. 统一设置编码
+   2. 过滤敏感词汇
+   3. 自动登录
+2. 如何使用
+   1. 定义一个类  实现filter接口
+   2. 在web.xml中注册过滤器
+3. 生命周期
+   1. 在服务器启动时创建
+   2. 在服务器关闭时销毁
+4. 执行顺序
+   - 按照filter-mapping顺序来执行
+   - 接收会经过过滤器
+   - 返回也会经过过滤器
+5. 细节
+   - init方法的参数 FilterConfig , 可以用来获取Filter注册的名字, 以及参数,  设计理念与ServletConfig类似
+   - 如果想让请求继续获取,  则需要调取 chain.doFilter(request,response);
+   - 设置过滤请求
+     - 全路径匹配   /loginServlet
+     - 目录匹配     / Demo01文件夹 /*
+     - 以后缀名匹配     *.jsp 
+     - dispatcher 
+       - request : 只要请求过来  都拦截
+       - forward : 只有转发都拦截
+       - ERROR : 页面出错发生跳转 拦截
+       - INCLUDE : 包含页面就跳转
+         - <servlet-name></servlet-name>
+
+### 例子: 自动登录
+
+1. 基本原理 : 在cookie中存储登录信息  , 当访问任何页面时 , 在filter中判断是否有存在cookie是否存在登录信息 , 若存在 则 重新登录 , 或者直接写入session中 , 实现登录效果, 如果没有, 则进入正常登陆状态 , 只是在登录时 , 将登陆信息写入cookie中 
+
+
+
+
+
+
+

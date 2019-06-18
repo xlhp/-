@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+	<person person_id="E01">
+		<name>Tony</name>
+		<address>10 downing strin</address>
+		<tel>(061) 987654</tel>
+		<fax>(061) 987654</fax>
+		<email>balir@qq.com</email>
+	</person>
+	<person person_id="E02">
+		<name>Bill</name>
+		<address>12 white donme</address>
+		<tel>(043) 123456</tel>
+		<fax>(043) 123456</fax>
+		<email>dill@qq.com</email>
+	</person>
+</people>

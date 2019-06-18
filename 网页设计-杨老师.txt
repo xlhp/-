@@ -1,0 +1,640 @@
+html标签
+元标签meta  name:作者，编码 字符编码 关键字，描述
+			charset: utf-8 国际通用
+					gb2312  国标
+					BIG5 港台澳（中文繁体）
+					GBK：新国标 gb2312 上扩展得到，包容了繁体
+
+h标签与p标签
+hr标签插入一个横线
+
+
+div标签  span标签
+区别：
+7, 文档格式标签
+
+b标签  strong标签
+i /em标签  斜体
+s/del   标签  加删除线
+<div>标签
+<span标签
+
+
+8,图像标签
+img
+
+图像格式：jpg  体积较小，有损压缩，基本保留色彩过渡区
+			.gif  保存动画图片  体积更小  一个文件中有最少三张图片，   
+			png 格式 体积较大  色彩不丢失  保存透明图
+			<img src="../image/黑科技.jpg" alt="黑科大" width="500px" border ="5"/>   	通过../来找到上级目录
+			
+超链接：a 标签（anchor）
+		<a href="链接目的地址(url)" >超链接文本图片</a>   Hypertext reference
+		超链接类型：内部链接  外部链接
+		图片热点超链接:通过点图片点一部分  来执行超链接
+		锚点：用于快速定位目标内容
+				创建超链接文本  语法：<a href = "#锚点名称">链接文本</a>
+					设置锚点位置 使用ID属性来指明锚点名称  方便链接
+		设置是否是新网页打开 target  value ：self 覆盖   _blank
+
+特殊字符：&nbsp;空格
+		  ...。。。。。
+
+
+		  
+		  
+注释标签：<!-- 注释内容 -->
+
+
+路径引用  ：相对路径与绝对路径
+
+
+
+
+
+
+
+
+
+
+
+
+w3 school
+
+十四：表单
+		1， 组成：表单控件（input） ，表单说明信息：label ，表单域：from
+		2，input控件
+		
+		
+		
+----------------------------- 苦逼的分割线----------------------
+css 层叠样式表
+控制页面元素外观 使其按照创作者的要求进行显示
+1,美化
+2，排版布局
+一：使用方式
+	1，行内样式表：
+				<h2 style="属性：属性值"></h2>
+	2，内部样式表
+	3，外部样式表
+		
+		
+字号大小的单位：Px   像素单位
+				 Em  相对大小单位   默认行高大小的EM倍
+				 Rem  相对根元素的大小单位
+				 Pt    绝对大小
+
+调节单词间的大小：word-spacing   ：英文单词之间的距离
+					letter-spacing ：字符间的大小，包括中文和英文
+					
+如何让段落开头缩进两个字符：text-indent:2em;
+行间距(行高)：         line-height：em
+				 
+背景是否重合background-repeat:no-repeat
+
+
+
+
+position:
+		static 
+		absolute(绝对位置) 
+		fixed:  fixed和absolute的区别  一般没区别  当有浮动条的时候   absolute 会随着页面移动,保持在界面中,fixed不会移动
+		relative:相对位置
+z-index:z轴位置默认为一位于最底层
+		absolute 和 fixed的区别 :1,参考原点不同  						 absolute参考其外层定义了position属性,则按照外层的左上角作为原点
+									fixed参考浏览器窗口
+								 2,absolute随着body的位置移动而移动 ,fixed不移动
+
+float:浮动right,left
+clear:left,right,both;仅对具备浮动属性的元素产生效果
+Z-index属性:控制元素前后位置,取值无单位数值,数值越小,越靠近底层
+可见区域属性(clip):可以选择剪切的一部分图片 取值方向 上-右-下-左
+层内容超出范围时显示方式(overflow):Visble,auto(滚动),hidden(隐藏),scroll(超出部分滑动)
+visibility :隐藏对象 保留位置     value:inherit,visible ,hidden
+display:删除位置和对象 				value:block,none
+
+列表属性:
+	list-type
+	list-style-type:
+    list-style-image
+	list-style-position
+
+
+
+<!------------------------------------JavaScript---------------------------------->
+简称js		发明人:布莱登·艾奇
+	1,弱类型语言   
+	2,是一种脚本语言
+	3,是一种解释性语言
+	4,是一种面向对象的语言
+结构:
+	ECMA标准(js语法)  
+	文档模型DOM
+	浏览器对象模型BOM
+作用:
+	1,完成前端用户交互,运行在客户端
+	2,也可以完成服务器端的后台处理
+	3,可以开发桌面程序
+基本语法:
+		注意事项:一般写在body后面 ,可以放在任意位置,也可单独创建js文件使用script中的src属性来引入文件
+					如果一个script中出现错误,只影响同一个script的语句
+					js每一个语句后面,都有一个";"作为结束
+					作为引入js文件的标签,不可以再写其他js语句
+					每一个script标签,都应该声明type或者language属性
+					js区分大小写
+		
+		1,常量
+			(1)数值类型
+				1)整型
+				2)浮点型
+			(2)字符串
+			(3)布尔型boolean
+			(4)对象object
+			(5)空类型null
+			(6)未定义 undefined
+		2,变量
+			变量名称对应计算机一组内存单元
+			变量使用前需要声明 ,使用 var
+			变量名称使用字母,下划线,数字和部分特殊符号通常以字母开头
+			不能使用关键字
+			(1)
+	
+			var num1;
+			声明对象数据类型:boolean double null undefined string(char) 
+							1,使用定义:var obj = new Object();
+							2,使用函数构造:funcation person (name,sex,age){
+												this.name=name;
+												this.sex=sex;
+												this.age=age;
+											}
+			取值范围:1,数据类型:max=console.log(Number.MAX_VALUE);超过:infinity
+								min=console.log(Number.MIN_VALUE);超过:-infinity
+			数值的判断:1,NaN(not a number)(其本身属于数值类型) 期望运算结果不合法(逻辑上无法运算)
+						2,isNaN(x)用于判断该值是不是数字,当x为数值类型 返回false,反之亦然
+						3,不要用小数验证小数0.1+0.2不等于0.3
+						typeof(x);获取x的数据类型
+			字符串数据类型:1,使用单引号或者双引号来表示
+							2,获取字符串长度:string.length
+							3,使用转义字符来表示\"等.....
+							4,链接两个字符串使用+
+			布尔类型:对应再计算机中存储的是:1和0
+			undefined 和null:
+							undefined 表示一个没赋值过的变量,默认返回一个undefined
+							null:表示一个空值,变量的值想要为null需要手动设定为null
+			对象类型:
+					1,定义方法:new Object();和定义法方法构造
+					
+			类型转换:
+					1,类型转数值:转整数:parseInt();当无法转换时,会变成NaN 但是类型还是number
+								 转小数:parseFloat();
+								 Number()
+					2,转字符串:变量名.toString()
+								String(变量名);
+					3,其他类型转布尔值:Boolean()
+					
+			运算符:
+				1,算数运算符
+				2,逻辑运算符
+				3,三元运算符
+				3,关系运算符
+				4,符合运算符
+				5,一元运算符
+					==  与 === 区别：
+					     双等号是值相等即可
+						 三等 必须类型也一致
+<!-------------------------------------------------------------------------->	
+	alert()方法:弹出一个对话框
+	打印点东西到页面:document.write();
+	window.prompt()从控制台获取数据(字符串类型)
+	
+JavaScript事件:
+	1,onClick事件:全屏和还原:
+			例:<input type = "button" name = "fullsreen" value = "全屏" onClick = "window.open(document.location,'big','fullscreen=yes')">
+				<input type = "button" name = "fullsreen" value = "还原" onClick = "window.close()">
+	
+
+导入外部js文件
+			<script type="text/script" src=""></script>
+			<noscript> 元素可以指定当浏览器不支持脚本是显示替代内容
+	通过省略var 来声明变量 从而创建一个全局变量
+	简单数据类型:undefined null,boolean,number string
+	typeof()检测变量的数据类型 返回一个字符串 操作符,不是方法
+	undefined:未初始化的
+	undefined分自null 
+	
+	在流程控制中可以自动转换成boolean
+	
+	NaN : 任何与NaN有关的操作,全部返回NaN NaN与任何值都不相等
+
+	Number () 可以将任何东西转换成数值类型
+	parseint和parseFloat 将转换字符串
+与其他语言不同的时 js 方法不一定要如java那样必须传进去相同的参数数,可以传多少个无所谓 
+	可以通过arguments.length 得到参数的数量
+	没有重载
+	函数不在乎有没有返回值
+	没有块级作用域
+	
+object : = new Object();
+		 ={};
+array  : =new Array();
+		 =new Array("ding","");
+		 =Array();
+		 =[1,2,3,4];
+不同于java数组  js数组可以通过length得到数组长度 同样也可以改变数组长度,从而达到去掉尾部元素的目的
+当然  arr[arr.length] = "Demo";同样可以将元素添加到数组的尾部
+检测是不是数组:Array.isArray(value);
+
+array.push(value);将value顺序插入数组的尾部,并修改length  并返回length
+array.pop() 去掉该数组尾部的一个元素并返回删除的元素
+array.shift() 取出首部的一个元素并返回
+array.reverse()   数组翻转
+array.sort() 将数组元素调用toString()方法比较顺序  19  在4 前面
+当然 可以入java 那样传进去compare方法
+规则如下 如果第一个数小于第二个数 则返回负数
+		 如果相等 返回0;
+		 如果第一个数大于第二个数返回正数
+reverse和sort方法返回一个排序以后的数组
+concat() 方法 array.concat(value)  创建一个原数组副本并将value值加到数组之后
+			作为新数组
+array.slice(begin,end)   	获取一个数组的begin位置到end位置的元素并作为一个数组返回
+array.splice(begin,length)	: 删除:提供第一项位置和要删除的项数
+							  插入:提供插入位置,和删除项数(0)  			插入项(可以有无数项)
+							  替换:类似于替换只是删除项数不是0就可以了,删除项数和插入项数不必完全相等
+
+迭代方法:every() :如果数组里面的每一项都符合条件,则返回true
+		 some():如果有一个符合则返回true
+		 filter() 数组内是否包含  返回一个数组
+		 map() 对数组内每一项都进行运算,并返回一个运算后的数组
+		forEach() 无返回值 可以进行某些操作
+var arr=[1,2,3,4,5];
+var arr2 = arr.forEach(
+					funcation(item,index,array){
+						alert(item+"\n");
+					}
+					);
+reduce 和 reduceRight 函数: 参数列表:prev cur index array (前一项,当前值,项的索引,数组对象)
+	对数组内进行叠加和*等操作,
+<!-----------------------Date------------------------>
+var now = new Date();//构造对象 返回一个当前时间
+返回一定的时间:var some = new Date(Date.parse("May 25,2000"));
+			   var some = new Date(Date.UTC(2000,3));参数列表:年,月(0-11),日(1-31),小时(0-23),分钟,秒,毫秒
+var now = new Date("Maya 25,2000");//同Date.parse()作用相同
+var now = new Date("2000,3");//同Date.UTC();作用相同  不同:本地时间,不是GMT
+
+var start = Date.now();//获得调用方法的时间的毫秒数 
+同样:var start = +new Date();
+
+date.toDateString()
+date.toTimeString()
+date.toLocaleDateString();
+date.toLocaleTimeString();
+date.toUTCString();
+date.toLocaleString();
+因为浏览器不同,所以输出格式是不一样的
+
+通过gethours()等方法可以得到年月日等信息,但是 hours 会比较特殊,他是以时区+- 来得到的准确时间
+参考:D:\31284\笔记\js笔记参考文档\Date_参考.png
+
+
+
+
+<!--------------------RegExp------------------------------->
+字面量声明方式: var expression = /at/flags;
+对象创建方式:var expression = new RegExp("at","i");
+字面量和对象创建方式不同的是:new 赋值给变量 会重新创建一个,如果是自变量创建,不会重新创建,还是原来的对象
+flags : g global 全局模式,应用于所有字符串,并非发现第一个匹配项时立刻停止
+i:不区分大小写模式 
+m:多行模式 到达一行文本末尾时,还会继续查找下一行中是否存在于模式匹配的项
+
+exec()方法与text()方法的区别
+exec()方法返回查询到的结果数组,如果匹配有,则将匹配到的数据作为数组元素返回 如果没有 则返回null
+text()方法是返回boolean值
+
+
+RegExp实例属性:global:boolean值,表示是否设置了g标识
+				ignoreCase:boolean值,表示是否设置了i表示
+				lastIndex:整数,表示开始搜索下一个匹配项的字符位置从0开始
+				multiline:boolean表示是否设置了m标志
+				source:正则表达式的字符串表示
+
+函数....................
+arguments.callee()可以指代当前函数
+属性和方法:length表示希望接受的命名参数的个数
+			prototype
+	apply():在特定作用域中调用方法
+	call():同上
+
+
+引用类型:
+Boolean,Number,String
+每当我们想要读取该基本类型时,后台会1,创建一个相应的引用类型对象
+2,在实力上调用指定的方法,3,销毁这个实例
+当然 ,无法给基本数据类型添加属性
+
+Number类型:
+	toFixed()按照指定的小数位返回数值的字符串表示 var num=10;
+												alert(num.toFixed(2));//10.00
+	toExponential()返回指数表示法表示的数值的字符串类型
+	
+String类型:
+		字符方法:charAt(value):得到value位置的字符
+				 charCodeAt(value):得到value位置字符的字符编码
+
+		字符串操作方法:1,concat() 拼接字符串 并返回结果
+		slice(begin,end)若负数:负值和字符串长度相加
+		substr()  				负的第一个参数加上字符串长度
+		substring()				负值转换成0
+		字符串位置方法:indexOf()和lastIndexOf()
+
+
+函数表达式后面需要加分号
+
+函数声明方式:1,function 函数名(){}  直接声明  
+			 2,var 函数名 = function (){};//匿名函数 函数表达式
+			 3,(function(){})(); //函数的自调用,不存在重名情况 用完即销毁
+函数也是一种数据类型
+
+
+对象调用属性:可以通过   对象名["属性名"]  来调用或寻找   自我感觉还是主要用于json的遍历问题
+
+
+预编译:1,函数声明会提前,
+		2,变量的声明会提前  都是提前到作用域之前
+
+自定义构造函数:function Person(name){this.name=name;}
+				var str = new Person();//创建一个对象
+
+js:是一门解释性语言,是一门脚本语言,是一门弱类型语言,是一门基于对象的语言
+	是一门动态类型的语言()
+
+
+	js : json格式:类似于java的map   键值对 json是一种对象
+		var json(名字)={
+			"key":"value",
+			"key":"value"
+		};
+		遍历:for(var key in json){
+					console.log(key);
+					console.log(json[key]);
+			}
+	
+-------------------------DOM学习---------------------------
+	
+ECMAScript  
+DOM:document object model  文档对象模型  操作页面元素
+BOM:bowser object model  浏览器对象模型   操作浏览器
+
+html:文档主要用于展示信息
+xml:主要用于存储信息
+
+阻止超链接跳转:点击或者其他事件触发:可以让函数return false(ie和chrome)  可以使用event.preventDefault();
+
+DOM学习 :
+如何获取对象
+	通过id属性值获取:getElementById();
+	通过标签名字获取:getelementsByTagName();
+	通过类属性值获取:getElementsByClassName();
+	通过name属性的值获取:getElementsByName();
+	通过类样式的名字获取:querySelector();//#id
+	通过类样式的名字获取:querySelectorAll()//.cls
+	
+
+事件:
+		鼠标点击  onclick
+		鼠标进入	onmouseover
+		鼠标离开	onmouseout
+		获取焦点事件:onfocus
+		失去焦点事件:onblur
+		鼠标移动:onmousemove
+		滚动条移动 onscroll
+			
+		
+		
+		
+		
+		
+		
+		
+常用方法:innerText 可以设置标签文本
+		 innerHTML 可以加标签  可加文本 推荐使用
+		 textContent 也可以加文本
+		 getAttribute(""):得到自定义属性的值
+		 setAttribute("属性名","值") :设置自定义属性
+		
+		动态创建元素:document.write()
+		    元素名.innerHTML();
+			document.createElement(tagname),1,创建一个对象
+											2,将元素加入到文档中   可以一直创建 所以可以得到很多元素
+		如何弥补第三种方法的劣势呢?
+		com$("but").onclick=function(){
+		var text = document.createElement("input");
+		text.id="text";
+		if(!com$("text")){
+			com$("fir").appendChild(text);
+		}
+
+		}
+		
+		对元素日常操作方法:1,appendCHild(element)
+		2,removeChild(oldelement)
+		3,insertbefore(element)
+		4,replaceChild(newElement,oldelement)
+		 
+		
+		给事件解绑
+		addEventListener -> removeEventListener
+		on+事件名 -> on+事件名字=""
+		attachEvent->detachEvent
+		
+		事件冒泡:指多个元素嵌套,有层次关系,这些元素都注册了相同的世家你,如果里面的元素的事件触发了外面的元素的事件自动触发
+		解决:ie和chrome    window.event.cancelBubble=true;
+			 火狐和chrome  e.stopPropagation
+			 
+		事件有三个阶段:
+			捕获阶段
+			事件目标阶段
+			冒泡阶段
+			
+	<body>
+		//id用于分别元素
+		<input type="button" value="按钮" id="but" />
+	</body>
+	<script>
+		//首先通过document对象的getElementById()方法得到该按钮的对象
+		var inputObj = document.getElementById("but");
+		//通过对象调用onclick属性,并将一个方法赋给他 通过方法实现点击弹框
+		inputObj.onclick=function(){
+			alert("点击");
+		}
+	</script>
+	经验: 只要是成对出现的标签  设置内容 都可以使用.innerText来设置
+	//案例2 :设置p标签内容
+		Object.innerText="内容";
+	
+	
+	如何得到一个标签的所有对象  使用document.getElementsByTagName();  返回一个伪数组
+	
+	按钮排他性如何实现: var change = document.getElementsByTagName("input");
+						for(var i=0;i<change.length;i++){
+							change[i].onclick=function(){
+								for(var k=0;k<change.length;k++){
+									change[k].value="没点击";
+								}
+								this.value="点击了";//为什么用this 而不用change[i] 没听懂....
+							}
+						}
+						
+	如何设置div的属性:div_object.sytle_object.property="";
+
+	点击一个超链接的小图 如何展示大图
+	 my$("little").onclick=function(){
+    my$("big").src=my$("smell").src;
+    return false;
+	}
+	
+	如何将两个不相关联的元素串联起来 可以通过设置自定义属性来实现
+
+	
+	节点:nodeName
+		 nodeType	1,元素 2,属性 3, 文本
+		 nodeValue
+	
+	节点的常用操作
+	var div_obj=document.getElementsByTagName("top");
+  //获取父级节点
+  var parentNode = div_obj.parentNode;
+  //获取父类
+  var parentElement = div_obj.parentElement;
+  //子节点
+  var childNodes = div_obj.childNodes;
+  //子元素
+  var children = div_obj.children;
+  
+  -----------------------------一下方法IE8不支持------------------------------需要写兼容代码
+  //某元素的前一个兄弟节点
+  var previousSibling = my$("no").previousSibling;
+  //获取某个元素的前一个兄弟元素
+  var previousElementSibling = my$("no").previousElementSibling;
+  //获取某个元素的后一个兄弟节点
+  var nextSibling = my$("no").nextSibling;
+  //获取某个元素的后一个元素
+  var nextElementSibling = my$("no").nextElementSibling;
+  //获取第一个子节点
+  var firstChild = div_obj.firstChild;
+  //获取第一个子元素
+  var firstElementChild = div_obj.firstElementChild;
+  //获取最后一个子节点
+  var lastChild = div_obj.lastChild;
+  //获取最后一个子元素
+  var lastElementChild = div_obj.lastElementChild;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+BOM--------------------------------------
+
+window.onload=function(){};
+location.href:设置跳转路径
+		.host:端口和主机名
+		.hash:地址栏后面#及后面的内容
+		.hostname:主机名
+		.pathname:文件相对路径
+		.port:端口
+		.protocol:协议
+		.search:?后面的内容
+	location.href="http://www.jd.com";//属性
+	location.assign("http://www.jd.com");//方法
+	location.reload();//刷新
+	location.replace("http://www.jd.com");//没有历史记录
+	
+history对象:back  forward  go  
+
+navigator对象:
+	navigator.platform  得到浏览器系统类型
+	naviagetor.userAgent  得到userAgent
+
+
+BOM中的定时器
+1,window.setInterval(function,时间(毫秒));
+停止定时器:clearInterval(定时器)
+var time = setInterval(function(){
+    alert("hah");
+  },1000);
+  var but = document.getElementById("but");
+  but.addEventListener("click",function(){
+    window.clearInterval(time);
+  },false);
+  
+2,一次性定时器  只执行一次
+var timout = window.setTimeout(function(){},1000);
+window.clearTimout(timeout);
+
+
+
+
+offset系列:
+offsetWidth:
+	top
+	left//获取左侧的距离
+offsetHight 其他同理
+
+scroll系列
+scrollTop和left  获取卷曲出去的距离
+scrollwidth 和height 获取元素中内容的实际宽和高
+
+client系列:可视区域
+ clientWidth:可视区域的宽(无边框)
+ clientHeight:可视区域的高(无边框)
+ clientLeft:左边框的宽度
+ clientTop:上边框的宽度
+
+
+
+
+
+
+
+获取页面向上卷曲数值
+下拉 是 浏览器方法 所以是window.addEventListener("scroll",function(){},false);
+top:window.pagYOffset||document.documentElement.ScrollTop||document.body.scrollTop
+left:window.pageXOffset||document.documentElement.ScrollTop||document.body.scrollTop;
+
+
+获取页面中所有css样式
+window.getcoputedStyle(obj,null)["属性"]   (对象)
+ie8  element.currentStyle["属性"](对象)
+
+
+可以通过动画方法 更改多个或一个任意属性的值
+
+
+
+window.location.assign()方法  从服务器端下载指定文件
+window.location.reload() 方法会重新递交post信息
+
+阻止form标签提交信息
+form.addEventListener("submit",function(event){
+			if(this.elements[0].value==""){
+				alert("请输入用户名!");
+				//阻止提交
+				event.preventDefault();
+			}else{
+				return true;
+			}
+		});
+
+
+  
+
+	
+	
+	
+	
+

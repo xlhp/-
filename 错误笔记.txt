@@ -1,0 +1,40 @@
+1,web链接数据库
+	1,第一个问题是mysql时区问题 解决方法:添加serverTimezone=GMT
+	jdbc:mysql://localhost:3360/bookdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+	2,驱动问题,8.01不可以使用com.mysql.jdbc.Driver,应该换为:com.mysql.cj.jdbc.Driver
+	3,java.sql.SQLException: Can not issue empty query.  原因:sql语句是空的
+	4,引入驱动后 找不到驱动:将jar包引入lib文件夹中 
+	5,Communications link failure 错误   把localhost写错了
+	6,illegal operation on empty result set ,对空集进行非法查询
+	
+	
+	
+前端错误  js  backgroundImage="url()";
+
+
+
+
+
+
+
+
+
+
+java  nullpointexception  对象为空
+
+错误 访问第一次时 初始化为0  计数器显示1
+
+
+
+
+
+
+mysql my.ini位置在C:\ProgramData\MySQL\MySQL Server 5.7   不在安装目录下
+
+
+
+
+
+
+
+扣丁学堂  注册验证 手机号 速度非常快  未解决

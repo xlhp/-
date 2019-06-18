@@ -1,0 +1,5 @@
+attach()
+	将数据框添加到R的搜索路径中
+detach()
+with()
+summary()

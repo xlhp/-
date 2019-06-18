@@ -1,0 +1,169 @@
+-----------总结--------------
+
+1,系统类
+	thinkphp/think
+	Config.php;
+	Controller.php
+	Env.php
+	Route.php
+	Url.php
+	View.php
+	
+2,系统方法
+	thinkphp/helper.php
+	dump()
+	controller();
+	action();
+	view();
+	cinfig();
+	url();
+	input()
+	request()
+-----------------------------------------------------------
+请求和响应
+
+1,如何获取请求类
+	1,系统函数(help.php)
+		1> request() //返回请求对象
+			$request = request();
+			dump($request);
+		2> Request类
+				//1,通过类进行实例化
+			   $request2 = Request::instance();
+			   //2,直接在方法中进行声明
+				public function instanceReq(Request $request){
+					dump($request);
+				}
+2,获取信息
+	  //获取域名
+        dump($request->domain());
+        //获取url地址 : 除去域名以外的url  即 用户在地址栏能看到的所有url除去域名之外的信息
+        dump($request->url());
+        //获取入口文件
+        dump($request->baseFile());
+        //获取baseUrl
+        dump($request->baseUrl());
+        //获取pathinfo  即除去域名与参数的路径
+        dump($request->pathinfo());
+        //pathinfo 无后缀
+        dump($request->path());
+        //url地址伪静态后缀  即一般网页伪装成.html文件
+        dump($request->ext());
+		
+		伪静态:就是将路径伪装成静态页面,让搜索引擎更好的收录网站,防止别人知道网站真实的开发源
+3,获取请求模块/控制器/方法
+	 //获取当前模块
+        dump($req->module());
+        //获取控制器
+        dump($req->controller());
+        //获取当前方法
+        dump($req->action());
+		
+		
+		
+		
+4,获取请求类型
+		//获取请求类型
+		dump($req->method());
+        //获取资源类型
+        dump($req->type());
+        //访问地址
+        dump($req->ip());
+        //判断是否ajax
+        dump($req->isAjax());
+		 //获取请求参数
+        dump($req->param());
+        //只想获取请求的几个参数
+        dump($req->only("id"));
+        //获取特定字段
+        dump($req->except("id"));
+5,获取变量
+	与请求类型上面获取参数类似  就是获取指定的参数
+	//判断get请求中是否存在id
+        dump($req->has("id","get"));
+        dump(input("?get.id"));//个人测试出问题
+		 //读取参数
+        dump($req->get(""));
+        dump(input("get.id"));
+
+        //获取所有
+        dump($req->get());
+        dump(input("get."));
+		
+	反正说 啥都能读 基本上web开发需要的参数都支持
+6,变量的过滤
+	对一些特殊的输入进行过滤 防止sql注入或者恶意输入
+	//有一些参数 需要查手册  还可以有多次过滤
+	 $req->filter(""); 
+	 
+	 //针对变量进行过滤
+	 $req->get("","");
+	 还可以进行md5加密
+7,变量的获取和排除
+8,变量修饰符
+	要求变量只能是某一种类型
+	 dump($req->get("id/d"));
+	 除了/d 还有其他的具体类型参考手册
+
+9,变量的更改
+		//获取参数后对参数的值进行修改
+		dump($req -> get("name"));
+        $req->get(["name"=>"ding","id"=>2]);
+        dump($req->get());
+10,判断请求类型
+		//Request类
+		dump($req->isGet());
+        dump($req->isPost());
+        dump($req->isMobile());
+		request方法
+        dump(\request()->isMobile());
+        dump(\request()->session());
+        dump(\request()->server());
+11,模拟各种请求
+	//类似于这种  表单类型请求方法必须是post  设置隐藏域来设置方法类型
+	 <input type="hidden" name="_method" value="put" />
+	 //模拟ajax请求   pjax同理
+	 <input type="hidden" name="_ajax" value="1" />
+12,伪静态 
+	1,作用:保证seo优化效果
+	       保证网站安全
+	2,修改
+		config.php 修改伪静态后缀     url_html_suffix  属性
+	3,获取  $request->ext();
+		
+13, 参数绑定
+	public function bindingParam(Request $req,,$id=1,$name="admin"){
+        dump($id);
+        dump($name);
+    }
+	即在方法中直接定义该参数, 通常用于参数固定的方法,如果没有参数 则会报错
+	注意:1,必须存在该参数,否则会报错
+		  2, 绑定参数少于地址栏参数
+		  3,必须一一对应
+		  4,支持设置默认值
+		  
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

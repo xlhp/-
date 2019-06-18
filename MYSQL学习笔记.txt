@@ -1,0 +1,86 @@
+多表更新的语法多使用在根据一个表的字段来动态的更新另一个表的字段
+
+distinct 用来查询不重复的记录;
+
+DML
+聚合操作, 聚合函数,group by ,with rollup,having
+表连接: 左链接和右链接
+		左链接:包含左边表的全部,和右边表中不和左边重合的内容
+		右连接:全部包含右边表的内容,和左边表中不和右边重合的内容
+子查询   子查询可以和表连接之间转换,主要应用:mysql4.1之前不支持子查询,还有就是用表连接来优化子查询
+记录联合:使用UNION 和 union all 区别 union 会去掉所有
+
+外键约束:创建时: foreign key(column) references foreigntablename(column) ;  
+
+
+DCL 语句主要是DBA 用来管理系统中的对象使用权限是使用;
+
+
+
+int 类型默认为11 位 如果在定义为int时 小于11 则在out of range 会自动添加到11
+时间类型:date  datetime timestamp time year 
+字符串类型:char和varchar  binary 和 varbinary  enum 和set
+算数运算符:+ - * / %
+比较运算符:= <>/!= <=> < <= > >= between in (is null) (is not null) (like) (regexp/rlike)
+    比较:true为1 false为0
+逻辑运算符:not/! and/&& or/|| xor(异或)
+
+
+
+关于内连接的例子:
+https://blog.csdn.net/sunyuhua_keyboard/article/details/80898314
+
+mysql sql语句练习:
+1,查询到所有有重复的邮箱(有两种方法)
+select DISTINCT a.Email
+    from Person a
+INNER JOIN
+Person b
+    WHERE
+a.Email=b.Email AND a.id!=b.id;
+
+2,给定一个表,将表内的某个属性值同一替换成另一个
+例子:将表内所有性别进行调换  (case when then else end  的使用)
+update salary set sex =
+(
+    case sex 
+    when 'm' then 'f'
+    else 'm'
+    end
+)
+3,电影排序,不能为boring  id为奇数 降序排序
+select * from cinema where description!='boring' and id%2!=0 order by rating desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

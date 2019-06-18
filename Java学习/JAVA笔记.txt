@@ -1,0 +1,397 @@
+#### java 项目文件结构:
+
+1. src
+
+   1. main
+
+      1. java : Application/Library 的源代码  再分package
+
+      2. flex: 增加flex源码 包含mxml定义 assets和as脚本
+
+      3. resources:application/Library 的资源文件 如:位图,配置文件等
+
+         1. conf: 增加封装到jar包中的配置文件
+
+      4. filters : Resource filter files
+
+      5. assembly : Assembly descriptors
+
+      6. config : maven 配置文件
+
+      7. webApps : Web应用的网页, WEB-INF目录所在
+
+         1. css :  .css文件
+         2. skins : 存放皮肤文件 framework
+         3. images : 存放图片,按照产品功能模块划分子目录
+         4. js : javascript 文件
+         5. include : 存放被包含的JS文件片段
+         6. resources : 存放jsf组件 相关资源
+         7. templates : 模板文件存放位置 , 按照类别划分子目录
+         8. pages : 网页目录
+         9. META-INF :  存放清单文件, services等配置信息
+         10. WEB-INF : 网站配置文件目录,存放WEB.xml等配置信息
+             1. classes : 未打包的项目编译代码,禁止手工修改
+             2. conf : 存放spring  jsf 等配置文件
+             3. lib : 存放第三方JAR文件
+             4. pages : 高安全的网页目录
+             5. tld : jsp标签库定义文件存放目录
+
+         
+
+   2. test :
+
+      1. java :  单元测试的源代码
+      2. resources : 测试使用的资源文件,如集成测试脚本
+         1. conf : 增加: 测试用例需要的配置文件
+      3. filters : Test resource fileter files
+
+   3. site : Site
+
+2. target : maven编译目录, 包含中间过程文件和最终的工件
+
+3. pom.xml : Maven工程的配置文件, 以此控制maven构建行为
+
+4. LICENSE.txt : 产品/本工程的版权信息文件
+
+5. README.txt : 产品/本工程的说明文件
+
+![1554348072336](D:\31284\笔记\Java学习\JAVA笔记.assets\1554348072336.png)
+
+
+
+
+
+
+
+
+
+/**
+
+* 菜逼经常忘记的一些常识
+**/
+BS 和 CS 一个浏览器和服务器 一个客户端与服务器
+OOP:面向对象的程序设计
+UML:统一建模语言
+
+implements 实现接口
+extends 继承类
+
+无修饰词:包内访问权限
+protected:继承类可以访问
+
+Java中存在按位操作符和移位操作符
+
+如果double向int转换, 会将double小数点后面的数字进行截尾 如果进行舍入操作 ,需要java.lang.Math.round()方法
+
+嘿 菜逼,在一个方法中调用同一个类的其他方法可以直接调用,this不要随便没事到处写
+
+临界区:访问临界资源的代码块
+临界资源:一次只允许一个线程进行访问的共享资源
+
+enum 和 switch 很搭 可以使用enum作为switch选项
+
+
+java 虽然没有goto 但是有break:label;和continue:label; 注意label应写在循环前面 在多层循环适用参考博客:https://blog.csdn.net/mdx20072419/article/details/41823949
+
+关于this关键字:只能在方法内部使用,用来表示调用方法的那个对象
+			   1,调用本类的属性,即类中的成员变量,2,调用本类中的其他方法,3,调用本类的其他构造方法
+关于初始化:按照定义的先后顺序决定初始化的顺序  很多不是很明白的地方:参考:D:\31284\笔记\初始化顺序.java
+
+java 源代码文件,称为编译单元可以有一个public类
+
+
+关于排序 Arrays.sort方法需要传进去一个实现了comparator接口的类实例  或者传进去Collections.reverseOrder()
+
+
+
+
+
+
+
+
+
+1,Writer writer = new PrintWriter();
+  像这样 使用子类来实例化父类的情况 该对象当调用父类子类都有的时候,使用子类的方法,但是,该对象不可调用子类有,父类没有的方法
+  但是 他是子类类型的....
+2,彩笔引入jar包还会出问题
+	1,选择项目属性中的libaray ->add external jar   下次使用此包还需要引用
+	2,java build path ->add library ->user library ->next
+	3,创建一个文件夹 将需要的第三方库全部拷到此文件夹下方便管理与使用
+引入jar包出现问题 :参考https://blog.csdn.net/Tomstrong_369/article/details/49587741
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+	io编程
+*/
+IO博客记录
+字符流:Writer,Reader
+bufferedWriter 和BufferedReader 能够提供缓冲区功能,用以提高效率
+
+字节流:
+InputStream  OutputSteam
+FileInputStream  FileOutputStream  实现文件读写
+
+
+
+文件 如何判断文件是否存在,不存在就新建
+	new File("").exists()方法判断是否存在该文件  返回一个存在返回true
+	不存在就新建:new File("").createNewFile();
+	
+基本的输入输出流参考文件:D:\31284\笔记IODemo.java文件
+
+高级流:1,Printwriter流
+		自动刷新的缓冲字符输出流,参考代码  D:\31284\笔记\PrintwriterDemo.java
+
+
+
+
+
+
+
+/**
+java 网络编程
+*/
+//网络编程基本概念
+c/s程序:qq,需要安装的 稳定
+b/s 浏览器/服务器
+Socket是网络驱动层提供给应用程序编程的接口和一种机制
+Socket 将得到网络数据 从而读取和写入进驱动 通过驱动来传送到服务器或客户端
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+map的遍历
+Map<String,Interger> map = new HashMap<>();
+//1.通过entry对象得到map值
+Set<Entry<Key,Value>> set = map.entrySet();
+for(Entry entry : set){
+	System.out.println("key="+entry.getKey()+"->"+"value="+entry.getValue());
+}
+//2，通过得到keyset来获取value
+Set set = map.keySet();
+for(String str : keySet){
+	System.out.println("key="+str+"->"+map.get(str));
+}
+//3，values方法至迭代值  返回一个collection集合
+Collection<Interger> values = map.values();
+for(Interger inter : values ){
+	System.out.println("values="+inter);
+}
+//4.1.8之后forEach
+map.forEach((key,value)->{System.out.println("key="+key+"->"+"value="+value)};)
+注：forEach 是1.8新加的   默认实现接口，故此不用引用  搭配lambda表达式来进行便利
+hashmap 的实现原理：基于哈希表（数组+链表+二叉树（红黑树））//wtf
+散列 ：当map数组已经被使用0.75时   会进行散列（重新创建数组）
+<!----------------------------collection工具类---------------------->
+
+排序操作:主要针对list
+		Collections.reverse(List);//反转排序
+		Collections.shuffle(List);//随机排序,洗牌
+		Collections.sort(List);//按自然顺序排序或者按照传入的comparable进行排序
+		Collections.swap(list,0,3)//交换顺序
+		Collections.rotate(list,1)//向下一位移动
+		Collections.binarySearch(Collection.sort(List),Object key);//获取指定集合的指定对象再集合中的索引,前提是该集合已经被排序
+		Collections.max(list,Comparator);//获取最大值
+		Collections.min(list,comparator);
+		Collections.fill(list,"bin");使用某元素填充集合
+		Collections.freqquency(list,"Demo");//找出集合中某元素出现的次数
+		Collections.replaceAll(list,"old","new");//将集合中所有某个元素替换成另一个值
+		同步控制:
+		Collections 工具类提供了多个synchronizedXxx方法,该方法返回指定集合对象对应的同步对象,从而解决多线程并发访问集合石线程安全的问题
+		。hashSet,arraylist,hashmap都是线程不安全的,如果需要考虑同步,则使用这些方法,有:synchronizedSet,Synchronized Sorted Set\
+		synchronizedList,synchronizedMap,synchronizedSortedMap  注:需要手工同步返回的集合
+		Collections.emptylist()返回一个空集合,无法添加
+
+
+
+<!-----------------------JavaBean------------------------------------------>
+简介
+	javabean是一种可重复使用的且跨平台的软件组件. 可分两种1,有用户界面的JavaBean,没有用户界面的JavaBean主要负责表示业务数据或者处理事务
+    JavaBean就是使用Java语言定义的类,而这种类的设计需要遵循Sun指定的JavaBean规范文档中描述的有关约定
+基本要求:1,类必须是public
+		 2,类必须具有无参public构造方法,
+		 3,成员变量一般称为属性:访问权限定义为private或者protected 对于每个属性,一般定义两个public方法get和set方法允许访问和修改 当boolean属性时 读取方法使用isXXX来表示
+
+
+
+
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+​		 
+<!----------------------------------------->	
+关于反射:能够分析类能力的程序被称为反射
+​	工具集,以便编写能够动态操纵Java代码程序
+参考:D:\eclipse工作环境\book\src\com\Demo1_1.java
+得到class对象的三种方法:1,Class.forName("路径");
+​						 2,ClassObject.getClass()
+​						 3,Class.class()//通过类名调用class方法得到class
+​				得到的class对象可以做到以下:实例化对象(通过有参和无参构造)
+​											得到对象类的属性 
+​											
+​	
+​	作用:1),在运行中分析类的能力
+​		 2),在运行中查看对象,
+​		 3)实现数组的操作代码
+​		 4),利用Method对象,
+
+
+如何给客户一个启动非常快的错觉:确保main方法没有显式的引用其他的类  首先显示一个启动画面,然后动过调用Class.forName手工的加载其他的类
+
+
+
+
+<!--------------------------------------------------------->
+线程安全同步:同步块->synchronized(Object){} 
+			 synchronized 同步方法
+
+<!--------------------------------------------------------->
+关于设计模式:1,对象创建,2,结构,3,行为
+1,对象创建:1),单例,2),抽象工厂,3),创造者,4)原型
+1),单例:1,提供私有的构造函数----> 代码参考:D:\31284\笔记\InstanceDemo.java
+		2,提供私有的静态变量
+		3,public的静态方法,提供外部类获取对象的唯一入口
+		4,饿汉模式(提前加载),懒汉模式(使用时加载)) 
+关于线程安全问题 可以使用双重判断 ->好处:不用每次都加锁判断 
+			模拟线程安全出现问题:当有一个线程访问时 还为创建对象完毕,即判断是否为空之后 还未成功创建对象,其他线程也调用的此方法从而导致错误
+2)工厂设计模式,简单,普通工厂,抽象工厂
+		
+
+
+
+动态代理:继承接口:InvocationHandler(interface) 和 Proxy(Class)
+
+
+
+
+
+
+解析xml文件
+方法: D:\31284\笔记\Java解析xml文件的方法(文件夹)
+	1,DOM 
+	2,DOM4j
+	3,jDOM
+	 4,sax  
+	 sax 做法详解:参考:D:\31284\笔记\SAX方法解析xml(文件夹)
+	 1,xml文件和javabean文件
+					2,解析助手类 handler 继承defaulthandler
+					3,saxdervice 类
+					4,执行类
+
+
+​	 
+​	 关于四种方法的好坏
+​	 1,sax:优势:不需要加载所有数据,,分析可以立刻开始,    只在读取数据时检查数据,不需要保存在内存中,   可以在摸个条件满足时停止解析,不必解析整个文档,效率和性能高,能解析大型文件;
+​	 缺点:需要应用程序自己负责TAG的处理逻辑(例如维护服务关系等),文档越复杂程序就越复杂;单项导航,无法定位文档层次,很难同时访问同一文档的不同部分数据,不支持xpath
+​	 2,DOM  优点:允许应用程序对数据和结构做出更改
+​			访问时双向的,可以在任何时候在树中上下导航,获取和操作任意部分的数据
+​			缺点:通常需要加载整个xml文档来构造层次结构 消耗资源大 ,对内存要求大
+​	 3JDOM  优点:使用具体类而不是接口,简化API;使用大量集合类,方便了java开发人员
+​	 缺点:没有较好的灵活性,性能差
+​	 4DOM4J   优点:大量使用java集合类方便了开发人员,同时提供了一些提高性能的替代方法;支持xpath;很好的性能
+​	 缺点:api很复杂
+
+​	 
+​	 
+​	 
+​	 
+​	 
+​	 
+​	 java 线程基础:Thread 和Runnable
+​		Thread.sleep(mill);//线程休眠
+​		ThreadObject.join(mill);//让一个线程立刻开始执行,并执行完毕
+​		ThreadObject.interrupt()//中断线程(自身中断)
+
+
+
+
+
+### 元数据
+
+1. 概念: 描述数据的数据 : 例如  歌曲的名字,作者..
+2. DatabaseMetaData : 数据库元数据
+
+   1. getDatabaseProductName: 获取数据的产品名称
+   2. getDatabaseProductName:获取数据库的版本号
+   3. getUserName : 获取数据的用户名
+   4. getUrl : 获取时速局连接的URL
+   5. getDriverName: 获取数据库驱动名称
+   6. driverVersion:获取数据库驱动版本号
+   7. isReadOnly: 查看数据是否只允许读操作
+   8. supportsTransactions: 查看数据库是否支持事务
+
+3. ParameterMetaData:真毒地PreparedStatement对象和其预编译的sql命令语句提供一些信息
+   1. getParameterCount:获取预编译sql语句中占位符参数的个数
+4. ResultSetMetaData:
+
+
+​      
+
+​      
+
+​      
+
+​      
+
+​      
+
+​      
+
+​      
+
+​        	 
+

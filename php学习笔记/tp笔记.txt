@@ -1,0 +1,274 @@
+thinkphp学习
+thinkphp.cn下载
+安装 检测安装环境是否符合
+3种安装方法
+
+
+目录结构: application  应用目录 整个网站的核心
+				index 前台目录
+						controller 控制器
+						model 数据模型
+						view 页面
+				admin 后台目录
+		  extend 扩展类库目录
+		  public静态资源和入口文件
+				static 存放静态资源 css/js/img
+				index.php 入口文件
+		  runtime 网站运行临时文件
+		  tests 测试目录
+		  thinkphp TP框架的核心文件
+				lang 语言包
+				library TP核心问加你
+				tpl 模板页面
+		  vendor 第三方扩展目录
+		  
+		  若模块目录下存在config目录,则应用配置目录下的模块则无效,并且不会对,两个目录进行合并
+		  
+		  
+		  
+11, 了解开发模式 
+	开启调试模式  app.php
+	
+	1, 链接数据库: tp/application/database.php  
+		可以通过他来修改数据
+	2, 在controller/index.php中书写代码
+	
+12, mvc 模式 (model,view,controller);  或者mvvm
+	model  数据模型 : 执行一系列数据库处理操作
+	view   视图: 页面
+	controller 控制器 : 逻辑运转
+13 mvc 的变形
+		1,mc  模型与控制器 
+				主要作用用于接口开发
+		2,vc  视图与控制器
+				主要作为单页面网站的开发
+				
+				
+
+TP5 的架构
+1, 将输入与输出和显示分开, 
+2, url解析 http://www.tp.com  /index.php  /Index     /Index   /index
+								入口文件   模块        控制器   方法
+3 ,入口文件 : public/index.php 整个网站的请求
+4, 应用 1, 应用地址 : application 
+		2,作用:一个应用代表一个网站
+5, 模块:(前台)application/index
+		2,作用 所有前台相关的都与其有关
+		
+		3,新建后台模块
+			application/adminn
+					view
+					model
+					contorller
+6,控制器:application/index/controller
+		2,书写业务逻辑
+
+7,新建控制器:
+		1,前台控制器在index/controller中创建
+		2,控制器中书写代码
+		3,地址栏访问
+		4,注意:a,控制器中的文件必须首字母大写
+				b,控制中必须声明命名空间
+				c,控制器中类名必须和文件名保持一致
+
+				
+8,操作(方法)
+		1,操作地址,操作一般都是在控制器的文件中
+		2,新建一个操作
+			1,打开前台index控制器
+			2,在控制器新建test方法
+		3,地址栏访问
+9,模型(数据模型)
+		1,数据模型地址  :即每个版块的model文件夹下
+		2,作用:负责数据库相关的处理
+10,视图(页面) 
+		1,地址 每个模块的view文件夹
+		2,作用:展示页面
+11, 命名空间
+		1,与目录有关
+12,跨控制器调用
+	1,调用当前模块的控制器
+		1,
+		$user = new namespace\User();
+        $user3 = new \app\Index\controller\User;
+        $user4 = new \app\index\controller\User();
+		2,
+		$user2 = new User();//通过use 引用命名空间 然后直接创建
+		3,通过系统提供的controller来控制
+		$user6 = controller("User");
+		controller 函数在thinkphp/helper.php中 
+	2,调用后台模块的控制器
+			  $admin = new \app\admin\controller\Index();
+				//因为前台已经存在Index 所以调用时需要用as 进行重命名
+				$admin1 = new AdminIndex();
+				$admin2 = controller("admin/Index");
+				
+	3,调用当前控制器的方法
+			//使用面向对象的基础
+			echo $this->index();
+			  echo "<hr />";
+			  echo self::index();
+			  echo "<hr />";
+			  echo Index::index();
+			  echo "<hr />";
+			  //使用系统方法
+			  echo action("index");
+	4,调用其他控制器的方法
+			 //1,如果是静态方法 则可以通过此方式直接调用
+			echo \app\index\controller\User::index();
+			//2,如果不是静态方法 ,则需要实例化其对象然后调用 实例化对象的方法上面有
+			$user = new namespace\User();
+			echo $user->index();
+			echo "<hr />";
+			//直接使用action方法来调用
+			echo action("User/index");
+	5,跨模块调用方法
+			//        1,实例化对象 ,然后调用
+        $admin = new \app\admin\controller\Index();
+        echo $admin->index();
+        echo "<hr />";
+//        2,通过调用系统方法来实现
+        echo action("admin/index/index");//action方法的路径
+13,thinkphp 的执行流程
+	1,入口文件:定义了一些目录常量
+			作用:定义目录常量
+			2,加载框架引导目录
+	2,加载框架的引导目录 
+			作用:引导基础文件
+	3,加载框架的基础引导文件(base.php)
+				1,引入了loader类:自动加载类
+				2,注册自动加载机制
+				3,注册错误与异常处理机制
+				4,注册类库别名
+	4,初始化应用
+			
+			
+			
+			
+			
+			
+			
+
+			
+			
+			
+tp的配置文件学习
+	1,tp的配置文件格式
+				1),thinkphp有多种配置方法, 但是以数组为主 其他方式都会转成数组
+			
+				2), return [
+						'name' => '';
+					]
+					
+	2,6种配置方法
+		1,惯例配置
+			thinkphp/convention.php  <= 惯例配置文件位置
+			可以在该文件中加入本身的配置
+			注意:一般不要修改惯例配置
+		2,应用配置
+			applocation/config.php 
+		3,扩展配置
+			1,扩展配置就是对配置文件进行分目录的管理
+			2,扩展配置的目录:
+				#database.php
+				#extra目录中可以自定义写配置文件
+		4,场景配置
+			1,解决问题  :开发中不可能只在一种环境中开发
+			2,使用 修改应用配置config.php  中的  app_status 
+					在应用目录下新建对应的配置文件
+					在新建的配置文件中书写相关配置
+					
+		5,模块配置
+			1,主要解决每一个模块中自己特有的配置
+			2,使用:在前台模块下 新建config.php 
+					前台配置都写在config.php 
+					如果模块配置文件中存在于app配置文件中邮箱冲突的地方,则模块配置文件会覆盖app配置
+		6,动态配置
+			临时性配置
+			如何配置:config("键","值")
+					config::set("键","值")
+			
+	3,配置文件的读取
+		config()方法  若参数为空 则将所有配置都打出来
+		//1,使用系统方法获取配置
+		$name = config('name');//文件位置为 /thinkphp/helper.php文件中
+        $age = config("age");
+        print_r($name." ".$age);
+		  //通过系统类获取配置   如果配置项存在 则输出  没有则返回null;
+        $config = new Config();
+        dump($config::get("age"));
+        print_r($config::get('name'));
+		
+		//若配置文件是一个数组
+		 //获取一个配置项为数组
+        print_r(config("teacher"));//Array ( [name] => 浩哥 [age] => 23 [address] => 北京 )
+        print_r(\config("teacher.name"));//浩哥
+        print_r(config("teacher.age"));//23
+		//使用config类也如上面一样
+		
+		dump()//用来进行友好的输出
+			
+		读取扩展配置
+			config("扩展文件名.扩展属性")
+			dump(\config("database.password"));
+			
+		读取场景配置:
+			当前app_status为 home
+			在home中指定
+			dump(\config("database.password"));
+			若开启场景模式 则其他场景中的扩展配置都失效
+			
+			
+	4,系统类:
+		Config  thinkphp/think/Config.php
+		Env
+		Controller
+		View
+		Route
+		URL
+	5,系统方法
+		config	设置与获取配置
+		action	调用模块的操作方法
+		Controller 实例化控制器
+		dump
+			
+			
+	6,加载顺序 
+		优先级:惯例配置 => 应用配置 => 扩展配置 => 场景配置 => 模块配置 => 动态配置
+		
+		原理 : 加载顺序导致优先级
+				惯例 : 应用: 扩展: 场景: 模块: 动态
+				使用array_merge() 方法进行数组合并 然后会将重复的键值进行合并
+				
+	7, 环境变量配置
+		tp5.0支持环境变量配置 以前版本不支持
+		1, 设置环境变量
+			1,打开网站根目录  在项目主目录下创建  .env文件
+		2,书写环境配置 
+		注:环境配置不可以使用中文
+				//配置单项环境配置
+				name = thinkphp
+				descript = wangzhan
+
+				//配置数组类型环境变量
+				[database]
+				type=mysql
+				root=root
+				passwd = root
+		3,读取环境变量 : 
+				think\env 
+				$env = new env();
+				dump($env->get("键","默认值可以设置为不存在"));
+				//数组类型也是一个一个的读取,不可以直接读一个数组
+				dump($env->get("键"));
+		4,作用:通过环境变量来配置其他配置,省去每次都找地方改变量
+	
+			
+			
+			
+			
+			
+			
+			
+
+

@@ -1,0 +1,13 @@
+语句 : show global variables like 'wait_timeout'; 得到wait_timeout
+		show global variables like 'port';得到数据库端口
+		
+		
+		
+		
+		
+		
+		
+		
+		
+关于my.ini文件位置:位于隐藏文件夹ProgramData中 在输入框输入%ProgramData%就能找到
+

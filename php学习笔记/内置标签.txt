@@ -1,0 +1,140 @@
+内置标签
+volist
+	1,volist遍历数据
+		name  :需要遍历的数据
+		id		:类似于foreach中的value
+		offset	:截取数据的起始位置
+		length	:截取数据的个数
+		mod  	:奇偶数
+		empty    :数据为空是使用
+		key		:下标
+	<p>volist</p>
+    <!--name:指代的数据集的名字(你需要遍历那个变量)
+        val : 相当于foreach中的$value
+        offset: 遍历从$key的第几个开始,但不包括,
+        length表示遍历几个
+    -->
+    {volist name="data" id="val" offset="3" length="2"}
+        <p>{$key} {$val.id} {$val.name}</p>
+    {/volist}
+	2,按照奇偶数输出
+    <!--取奇偶 -->
+    {volist name="data" id="val"}
+        {eq name="mod" value="0"}
+            <p style="color: blue;">{$key} {$val.id}          {$val.name}</p>
+        {/eq}
+        {eq name="mod" value="1"}
+            <p style="color: red;">{$key} {$val.id} {$val.name}</p>
+        {/eq}
+    {/volist}
+	3,如果数据集为空
+	$this->assign("empty","<b>不能为空</b>");
+	
+    <!--当没有数据时 返回empty中的值-->
+    {volist name="d" id="val" empty="$empty"}
+        <p></p>
+    {/volist}
+
+foreach
+			1,foreach遍历
+				name:需要遍历的数据集
+				item : $value
+				key:$key
+				 <p>foreach</p>
+    {foreach name="data" item="val" key="abc"}
+        <p>{$val.id}  {$val.name} {$abc}</p>
+    {/foreach}
+    
+for 
+		1,
+		start:开始数字
+		end:结束
+		comparison:条件 是大于还是小于还是等于
+		step:步数
+		name:循环变量名  默认是  i
+		
+		
+		<p>for循环</p>
+		{for start="0" end="10" comparison="lt" step="2" name="abc" }
+			{$abc}
+		{/for}
+	
+比较标签
+	{eq name="a" value="$b"}等于{else/}不等于{/eq}
+    <br>
+    {neq name="a" value="$b"}不等于{/neq}
+    <br>
+    {gt name="a" value="$b"}大于{/gt}
+    <br>
+    {egt name="a" value="$b"}大于等于{/egt}
+    <br>
+    {lt name="a" value="$b"}小于{/lt}
+    <br>
+    {elt name="a" value="$b"}小于等于{/elt}
+    <br>
+    {heq name="a" value="$b"}恒等于{/heq}
+    <br>
+    {nheq name="a" value="$b"}不恒等于{/nheq}
+	具体参考手册
+
+条件判断
+	 <p>
+        条件判断
+   
+   </p>
+
+	1,if    
+		{if condition="$a == $b"}
+			<p>数值相等</p>
+			{else/}
+			<p>数值不相等</p>
+		{/if}
+		<hr>
+	2,switch   
+	   <p>switch</p>
+		{switch name="a"}
+			{case value="1"}{$a}{/case}
+			{case value="2"}{$a}{/case}
+			{case value="3"}{$a}{/case}
+			{case value="4"}{$a}{/case}
+			{case value="5"}{$a}{/case}
+			{case value="6"}{$a}{/case}
+			{default /}{不存在的值}
+		{/switch}
+	
+	
+	
+原生php
+	{php}
+	{/php}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
