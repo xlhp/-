@@ -8,3 +8,9 @@ jquery : eval()方法处理字符串， 当你面对两个字符串比大小的�
 java ： Calendar 类可以用来获取日期的前几天或者某几天
 mysql : UNIX_TIMESTEMP（）方法可以将日期转换成int类型，精确到秒数
 
+软件开发过程中常用环境：
+        dev : development environment 开发环境，用于开发者调试使用
+        fat：feature acceptance test environment 功能验收测试环境，用于测试进行测试
+        uat：user acceptance test environment 用户验收测试环境，用于生产环境下软件测试的测试使用
+        pro：Production environment 生产环境
+
